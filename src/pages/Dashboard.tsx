@@ -5,7 +5,7 @@ import { useGoals } from '../hooks/useGoals'
 import DotChart from '../components/dashboard/DotChart'
 import { useCategories } from '../contexts/CategoriesContext'
 import type { Transaction, SavingsGoal, Budget } from '../types'
-import { Camera, Pencil, Plus, Tag } from 'lucide-react'
+import { Camera, Plus, Tag } from 'lucide-react'
 import { CAT_ICONS } from '../lib/catIcons'
 
 // ── helpers ──────────────────────────────────────────────────────────────────

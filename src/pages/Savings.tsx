@@ -158,12 +158,6 @@ export default function Savings() {
 
   // ── render ─────────────────────────────────────────────────────────────────
 
-  const inputStyle: React.CSSProperties = {
-    padding: '8px 12px', borderRadius: '8px', border: '1px solid var(--border)',
-    background: 'var(--bg3)', color: 'var(--text)', fontFamily: "'Caveat', cursive",
-    fontSize: '1.1rem', outline: 'none', width: '120px', boxSizing: 'border-box',
-  }
-
   return (
     <div style={{ maxWidth: '680px', margin: '0 auto', padding: '16px' }}>
       <h1 style={{

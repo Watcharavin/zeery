@@ -8,7 +8,6 @@ interface RoughBoxProps {
   strokeWidth?: number
   roughness?: number
   bowing?: number
-  borderRadius?: number
   style?: React.CSSProperties
   className?: string
   onClick?: () => void
@@ -25,7 +24,6 @@ export default function RoughBox({
   strokeWidth = 2,
   roughness = 1.2,
   bowing = 1.5,
-  borderRadius = 12,
   style,
   className,
   onClick,
@@ -68,11 +66,10 @@ export default function RoughBox({
         strokeWidth,
         roughness,
         bowing,
-        borderRadius,
       },
     )
     svg.appendChild(node)
-  }, [size, fill, stroke, strokeWidth, roughness, bowing, borderRadius])
+  }, [size, fill, stroke, strokeWidth, roughness, bowing])
 
   return (
     <div

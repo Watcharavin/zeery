@@ -56,7 +56,6 @@ export default function RoughButton({
       strokeWidth: 2,
       roughness: 1.5,
       bowing: 2,
-      borderRadius: 8,
     })
     svg.appendChild(node)
   }, [size, fill, stroke, disabled])
