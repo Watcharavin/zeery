@@ -1,5 +1,7 @@
 export const config = { runtime: 'edge' }
 
+declare const process: { env: Record<string, string | undefined> }
+
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') {
     return new Response('Method Not Allowed', { status: 405 })
