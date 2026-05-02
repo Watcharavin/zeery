@@ -19,36 +19,13 @@ export function useTheme() {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>(() => {
-    return (localStorage.getItem('zeery-theme') as Theme) ?? 'auto'
-  })
-
-  const [isDark, setIsDark] = useState(false)
-
+  // Dark mode dropped for doodle phase — always light
   useEffect(() => {
-    const apply = (dark: boolean) => {
-      setIsDark(dark)
-      document.documentElement.dataset.theme = dark ? 'dark' : 'light'
-    }
-
-    if (theme === 'auto') {
-      const mq = window.matchMedia('(prefers-color-scheme: dark)')
-      apply(mq.matches)
-      const handler = (e: MediaQueryListEvent) => apply(e.matches)
-      mq.addEventListener('change', handler)
-      return () => mq.removeEventListener('change', handler)
-    } else {
-      apply(theme === 'dark')
-    }
-  }, [theme])
-
-  const setTheme = (t: Theme) => {
-    localStorage.setItem('zeery-theme', t)
-    setThemeState(t)
-  }
+    document.documentElement.dataset.theme = 'light'
+  }, [])
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, isDark }}>
+    <ThemeContext.Provider value={{ theme: 'light', setTheme: () => {}, isDark: false }}>
       {children}
     </ThemeContext.Provider>
   )

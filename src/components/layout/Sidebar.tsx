@@ -22,13 +22,16 @@ const linkStyle = (active: boolean): React.CSSProperties => ({
   alignItems: 'center',
   gap: '10px',
   padding: '8px 12px',
-  borderRadius: '8px',
+  borderRadius: '255px 15px 225px 15px / 15px 225px 15px 255px',
   textDecoration: 'none',
   fontSize: '0.88rem',
-  fontWeight: active ? 600 : 400,
+  fontWeight: active ? 700 : 400,
+  fontFamily: "'Kalam', 'Itim', cursive",
   color: active ? 'var(--accent)' : 'var(--text2)',
-  background: active ? 'rgba(232,93,36,0.08)' : 'transparent',
-  transition: 'all 0.15s',
+  background: active ? 'var(--accent-fill)' : 'transparent',
+  border: active ? '2px solid var(--accent)' : '2px solid transparent',
+  boxShadow: active ? 'var(--shadow-sm)' : 'none',
+  transition: 'all 0.15s ease',
 })
 
 function SideNavLink({ to, label, icon }: { to: string; label: string; icon: string }) {
@@ -47,7 +50,8 @@ export default function Sidebar() {
         width: '200px',
         flexShrink: 0,
         background: 'var(--bg2)',
-        borderRight: '1px solid var(--border)',
+        borderRight: '3px solid var(--border)',
+        boxShadow: '3px 0 0 var(--border)',
         padding: '1rem 0.75rem',
         display: 'flex',
         flexDirection: 'column',
@@ -59,16 +63,35 @@ export default function Sidebar() {
       }}
     >
       <div style={{ marginBottom: '0.5rem' }}>
-        <p style={{ fontSize: '0.7rem', color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0 12px 6px' }}>
+        <p style={{
+          fontSize: '0.68rem',
+          color: 'var(--text2)',
+          textTransform: 'uppercase',
+          letterSpacing: '0.1em',
+          padding: '0 12px 6px',
+          fontFamily: "'Caveat', cursive",
+          fontWeight: 700,
+          fontSize: '0.8rem',
+        }}>
           หลัก
         </p>
         {navMain.map(n => <SideNavLink key={n.to} {...n} />)}
       </div>
 
-      <div style={{ borderTop: '1px solid var(--border)', paddingTop: '0.5rem' }}>
-        <p style={{ fontSize: '0.7rem', color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0 12px 6px' }}>
+      <div style={{ borderTop: '2px dashed var(--text2)', paddingTop: '0.75rem', opacity: 0.6 }}>
+        <p style={{
+          fontFamily: "'Caveat', cursive",
+          fontWeight: 700,
+          fontSize: '0.8rem',
+          color: 'var(--text2)',
+          padding: '0 12px 6px',
+          textTransform: 'uppercase',
+          letterSpacing: '0.1em',
+        }}>
           อื่นๆ
         </p>
+      </div>
+      <div style={{ opacity: 1 }}>
         {navOther.map(n => <SideNavLink key={n.to} {...n} />)}
       </div>
     </aside>

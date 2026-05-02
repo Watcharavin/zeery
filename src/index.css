@@ -1,98 +1,134 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=DM+Mono:wght@400;500&family=Noto+Sans+Thai:wght@300..700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ── Doodle / Hand-drawn Design Tokens ─────────────────────────────────────── */
 :root {
-  --bg:      #f5f3f0;
-  --bg2:     #ffffff;
-  --bg3:     #eeece9;
-  --text:    #1a1a1a;
-  --text2:   #666660;
-  --border:  rgba(0, 0, 0, 0.08);
-  --accent:  #e85d24;
-  --accent-rgb: 232, 93, 36;
-  --green:   #16a34a;
-  --green-rgb: 22, 163, 74;
-  --red:     #dc2626;
-  --red-rgb: 220, 38, 38;
-  --purple:  #7c3aed;
-  --purple-rgb: 124, 58, 237;
-  --amber:   #d97706;
+  /* backgrounds — cream paper */
+  --bg:      #fdfcf7;
+  --bg2:     #faf8f0;
+  --bg3:     #f0ede3;
+
+  /* ink colors */
+  --text:    #2c2c2c;
+  --text2:   #7a7060;
+  --border:  #2c2c2c;
+
+  /* brand palette — desaturated pastels */
+  --accent:       #e8724a;   /* warm orange */
+  --accent-fill:  #fff0ea;   /* light orange tint for card fills */
+  --green:        #5a9e3a;
+  --green-fill:   #edf6e7;
+  --red:          #d45c5c;
+  --red-fill:     #fdf0f0;
+  --purple:       #7b6bbf;
+  --purple-fill:  #f0eefb;
+  --amber:        #c9952a;
+  --amber-fill:   #fdf6e3;
+  --blue:         #4a8fc4;
+  --blue-fill:    #e8f3fb;
+
+  /* hard-shadow offset for doodle feel */
+  --shadow:     3px 3px 0 #2c2c2c;
+  --shadow-sm:  2px 2px 0 #2c2c2c;
+  --shadow-lg:  5px 5px 0 #2c2c2c;
+
+  /* border width */
+  --bw: 2px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg:      #0f0f0f;
-    --bg2:     #181818;
-    --bg3:     #222222;
-    --text:    #f0ede8;
-    --text2:   #888880;
-    --border:  rgba(255, 255, 255, 0.08);
-    --accent:  #e85d24;
-    --green:   #a8e6a3;
-    --red:     #f09090;
-    --purple:  #c4b5fd;
-    --amber:   #fcd34d;
-  }
-}
-
-[data-theme='dark'] {
-  --bg:      #0f0f0f;
-  --bg2:     #181818;
-  --bg3:     #222222;
-  --text:    #f0ede8;
-  --text2:   #888880;
-  --border:  rgba(255, 255, 255, 0.08);
-  --accent:  #e85d24;
-  --green:   #a8e6a3;
-  --red:     #f09090;
-  --purple:  #c4b5fd;
-  --amber:   #fcd34d;
-}
-
-[data-theme='light'] {
-  --bg:      #f5f3f0;
-  --bg2:     #ffffff;
-  --bg3:     #eeece9;
-  --text:    #1a1a1a;
-  --text2:   #666660;
-  --border:  rgba(0, 0, 0, 0.08);
-  --accent:  #e85d24;
-  --green:   #16a34a;
-  --red:     #dc2626;
-  --purple:  #7c3aed;
-  --amber:   #d97706;
-}
-
+/* ── Reset ──────────────────────────────────────────────────────────────────── */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* ── Base typography ────────────────────────────────────────────────────────── */
 body {
-  font-family: 'DM Sans', 'Noto Sans Thai', sans-serif;
+  font-family: 'Kalam', 'Itim', cursive;
   background-color: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
   min-height: 100svh;
 }
 
-.font-mono-num {
-  font-family: 'DM Mono', monospace;
+/* Caveat for headings/labels */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Caveat', cursive;
 }
 
+/* Caveat for numbers (replaces DM Mono) */
+.font-mono-num {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+}
+
+/* ── Doodle utilities ───────────────────────────────────────────────────────── */
+
+/* Hard-shadow card — the core doodle card style */
+.doodle-card {
+  background: var(--bg2);
+  border: var(--bw) solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.doodle-card:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Doodle button */
+.doodle-btn {
+  font-family: 'Kalam', 'Itim', cursive;
+  border: var(--bw) solid var(--border);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.doodle-btn:hover {
+  transform: translate(-1px, -2px) rotate(-0.5deg);
+  box-shadow: var(--shadow);
+}
+.doodle-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+/* Doodle input */
+.doodle-input {
+  font-family: 'Kalam', 'Itim', cursive;
+  border: none;
+  border-bottom: var(--bw) solid var(--border);
+  background: transparent;
+  outline: none;
+  color: var(--text);
+}
+.doodle-input:focus {
+  border-bottom-color: var(--accent);
+}
+
+/* ── Animations ─────────────────────────────────────────────────────────────── */
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
-/* Dashboard bento grid — 2 col on mobile */
+@keyframes dot-bounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-4px); opacity: 1; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 0; }
+}
+
+/* ── Dashboard grid ─────────────────────────────────────────────────────────── */
 @media (max-width: 767px) {
   .dashboard-grid {
     grid-template-columns: repeat(2, 1fr) !important;
