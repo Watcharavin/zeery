@@ -1,4 +1,5 @@
-import { Menu } from 'lucide-react'
+import { Menu, LogOut } from 'lucide-react'
+import { useAuth } from '../../hooks/useAuth'
 
 interface TopBarProps {
   period: 'weekly' | 'monthly'
@@ -7,6 +8,7 @@ interface TopBarProps {
 }
 
 export default function TopBar({ period, onPeriodChange, onMenuToggle }: TopBarProps) {
+  const { user, signOut } = useAuth()
   const now = new Date()
   const monthLabel = now.toLocaleDateString('th-TH', { month: 'long', year: 'numeric' })
 
@@ -64,6 +66,9 @@ export default function TopBar({ period, onPeriodChange, onMenuToggle }: TopBarP
         </span>
       </div>
 
+      {/* User avatar + sign out */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+
       {/* Period toggle */}
       <div
         style={{
@@ -97,6 +102,20 @@ export default function TopBar({ period, onPeriodChange, onMenuToggle }: TopBarP
             {p === 'weekly' ? 'สัปดาห์' : 'เดือน'}
           </button>
         ))}
+      </div>
+
+        {/* Avatar */}
+        {user?.photoURL
+          ? <img src={user.photoURL} alt="" style={{ width: 30, height: 30, borderRadius: '50%', border: '1px solid var(--border)' }} />
+          : <div style={{ width: 30, height: 30, borderRadius: '50%', background: 'var(--accent-fill)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Caveat', cursive", fontWeight: 700, color: 'var(--accent)', fontSize: '0.9rem' }}>
+              {user?.displayName?.[0] ?? '?'}
+            </div>
+        }
+
+        {/* Sign out */}
+        <button onClick={signOut} title="ออกจากระบบ" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text2)', display: 'flex', alignItems: 'center', padding: '4px' }}>
+          <LogOut size={16} strokeWidth={2} />
+        </button>
       </div>
     </header>
   )

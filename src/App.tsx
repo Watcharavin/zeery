@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useAuth } from './hooks/useAuth'
 import AppShell from './components/layout/AppShell'
+import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Transactions from './pages/Transactions'
 import AddTransaction from './pages/AddTransaction'
@@ -16,7 +17,7 @@ import Categories from './pages/Categories'
 import { CategoriesProvider } from './contexts/CategoriesContext'
 
 function App() {
-  const { loading } = useAuth()
+  const { loading, uid } = useAuth()
 
   if (loading) {
     return (
@@ -33,6 +34,8 @@ function App() {
       </div>
     )
   }
+
+  if (!uid) return <Login />
 
   return (
     <CategoriesProvider>
