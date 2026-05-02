@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=DM+Mono:wght@400;500&family=Noto+Sans+Thai:wght@300..700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg:      #f5f3f0;
+  --bg2:     #ffffff;
+  --bg3:     #eeece9;
+  --text:    #1a1a1a;
+  --text2:   #666660;
+  --border:  rgba(0, 0, 0, 0.08);
+  --accent:  #e85d24;
+  --accent-rgb: 232, 93, 36;
+  --green:   #16a34a;
+  --green-rgb: 22, 163, 74;
+  --red:     #dc2626;
+  --red-rgb: 220, 38, 38;
+  --purple:  #7c3aed;
+  --purple-rgb: 124, 58, 237;
+  --amber:   #d97706;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:      #0f0f0f;
+    --bg2:     #181818;
+    --bg3:     #222222;
+    --text:    #f0ede8;
+    --text2:   #888880;
+    --border:  rgba(255, 255, 255, 0.08);
+    --accent:  #e85d24;
+    --green:   #a8e6a3;
+    --red:     #f09090;
+    --purple:  #c4b5fd;
+    --amber:   #fcd34d;
+  }
+}
+
+[data-theme='dark'] {
+  --bg:      #0f0f0f;
+  --bg2:     #181818;
+  --bg3:     #222222;
+  --text:    #f0ede8;
+  --text2:   #888880;
+  --border:  rgba(255, 255, 255, 0.08);
+  --accent:  #e85d24;
+  --green:   #a8e6a3;
+  --red:     #f09090;
+  --purple:  #c4b5fd;
+  --amber:   #fcd34d;
+}
+
+[data-theme='light'] {
+  --bg:      #f5f3f0;
+  --bg2:     #ffffff;
+  --bg3:     #eeece9;
+  --text:    #1a1a1a;
+  --text2:   #666660;
+  --border:  rgba(0, 0, 0, 0.08);
+  --accent:  #e85d24;
+  --green:   #16a34a;
+  --red:     #dc2626;
+  --purple:  #7c3aed;
+  --amber:   #d97706;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'DM Sans', 'Noto Sans Thai', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100svh;
+}
+
+.font-mono-num {
+  font-family: 'DM Mono', monospace;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Dashboard bento grid — 2 col on mobile */
+@media (max-width: 767px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .dashboard-grid > *[style*="span 2"] {
+    grid-column: span 2 !important;
+  }
+}
