@@ -22,11 +22,11 @@ export default function SlipConfirm({ slip, imgSrc, onConfirm, onCancel }: Props
   const inputStyle: React.CSSProperties = {
     width: '100%',
     padding: '10px 12px',
-    borderRadius: '8px',
+    borderRadius: '10px',
     border: '1px solid var(--border)',
     background: 'var(--bg3)',
     color: 'var(--text)',
-    fontFamily: 'DM Sans, sans-serif',
+    fontFamily: "'Kalam', 'Itim', cursive",
     fontSize: '0.88rem',
     outline: 'none',
     boxSizing: 'border-box',
@@ -39,6 +39,7 @@ export default function SlipConfirm({ slip, imgSrc, onConfirm, onCancel }: Props
     letterSpacing: '0.06em',
     marginBottom: '6px',
     display: 'block',
+    fontFamily: "'Kalam', 'Itim', cursive",
   }
 
   const handleConfirm = () => {
@@ -54,7 +55,13 @@ export default function SlipConfirm({ slip, imgSrc, onConfirm, onCancel }: Props
       <img
         src={imgSrc}
         alt="slip"
-        style={{ width: '100%', maxHeight: '200px', objectFit: 'contain', borderRadius: '8px', background: 'var(--bg3)' }}
+        style={{
+          width: '100%', maxHeight: '200px', objectFit: 'contain',
+          borderRadius: '12px',
+          border: '1px solid var(--border)',
+          background: 'var(--bg3)',
+          boxShadow: 'var(--shadow-sm)',
+        }}
       />
 
       {/* Amount */}
@@ -64,7 +71,7 @@ export default function SlipConfirm({ slip, imgSrc, onConfirm, onCancel }: Props
           type="number"
           value={amount}
           onChange={e => setAmount(e.target.value)}
-          style={{ ...inputStyle, fontFamily: 'DM Mono, monospace', fontSize: '1.4rem', fontWeight: 600 }}
+          style={{ ...inputStyle, fontFamily: "'Caveat', cursive", fontSize: '1.6rem', fontWeight: 700 }}
         />
       </div>
 
@@ -80,18 +87,24 @@ export default function SlipConfirm({ slip, imgSrc, onConfirm, onCancel }: Props
                 onClick={() => setCatId(cat.id)}
                 style={{
                   padding: '8px 4px',
-                  borderRadius: '8px',
-                  border: sel ? `2px solid ${cat.color}` : '2px solid transparent',
+                  borderRadius: '10px',
+                  border: sel ? `2px solid ${cat.color}` : '1px solid var(--border)',
                   background: sel ? `${cat.color}18` : 'var(--bg3)',
                   cursor: 'pointer',
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
                   gap: '2px',
+                  boxShadow: sel ? 'var(--shadow-sm)' : 'none',
                 }}
               >
                 <span style={{ fontSize: '1.1rem' }}>{cat.emoji}</span>
-                <span style={{ fontSize: '0.62rem', color: sel ? cat.color : 'var(--text2)', fontWeight: sel ? 600 : 400 }}>
+                <span style={{
+                  fontSize: '0.62rem',
+                  color: sel ? cat.color : 'var(--text2)',
+                  fontWeight: 700,
+                  fontFamily: "'Kalam', 'Itim', cursive",
+                }}>
                   {cat.label}
                 </span>
               </button>
@@ -123,9 +136,11 @@ export default function SlipConfirm({ slip, imgSrc, onConfirm, onCancel }: Props
         <button
           onClick={onCancel}
           style={{
-            flex: 1, padding: '14px', borderRadius: '10px', border: '1px solid var(--border)',
+            flex: 1, padding: '14px',
+            borderRadius: '10px',
+            border: '1px solid var(--border)',
             background: 'var(--bg3)', color: 'var(--text2)', cursor: 'pointer',
-            fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', fontWeight: 600,
+            fontFamily: "'Kalam', 'Itim', cursive", fontSize: '0.9rem', fontWeight: 700,
           }}
         >
           ยกเลิก
@@ -133,9 +148,12 @@ export default function SlipConfirm({ slip, imgSrc, onConfirm, onCancel }: Props
         <button
           onClick={handleConfirm}
           style={{
-            flex: 2, padding: '14px', borderRadius: '10px', border: 'none',
+            flex: 2, padding: '14px',
+            borderRadius: '10px',
+            border: '2px solid var(--accent)',
             background: 'var(--accent)', color: '#fff', cursor: 'pointer',
-            fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', fontWeight: 700,
+            fontFamily: "'Kalam', 'Itim', cursive", fontSize: '0.9rem', fontWeight: 700,
+            boxShadow: 'var(--shadow)',
           }}
         >
           นำเข้า ฿{parseFloat(amount || '0').toLocaleString('th-TH')}

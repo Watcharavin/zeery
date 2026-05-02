@@ -33,9 +33,9 @@ export default function ConfirmButton({ onConfirm, disabled, size = 13 }: Props)
       style={{
         minWidth: pending ? 72 : 30,
         height: 30,
-        borderRadius: '8px',
-        border: pending ? '1px solid rgba(220,38,38,0.6)' : '1px solid rgba(220,38,38,0.25)',
-        background: pending ? 'rgba(220,38,38,0.15)' : 'rgba(220,38,38,0.06)',
+        borderRadius: '10px',
+        border: `2px solid ${pending ? 'var(--red)' : 'rgba(224,90,90,0.35)'}`,
+        background: pending ? 'var(--red-fill)' : 'rgba(224,90,90,0.06)',
         color: 'var(--red)',
         cursor: disabled ? 'not-allowed' : 'pointer',
         flexShrink: 0,
@@ -45,8 +45,8 @@ export default function ConfirmButton({ onConfirm, disabled, size = 13 }: Props)
         gap: 4,
         padding: pending ? '0 8px' : 0,
         fontSize: '0.72rem',
-        fontFamily: 'DM Sans, sans-serif',
-        fontWeight: 600,
+        fontFamily: "'Kalam', 'Itim', cursive",
+        fontWeight: 700,
         transition: 'all 0.15s',
         whiteSpace: 'nowrap',
       }}

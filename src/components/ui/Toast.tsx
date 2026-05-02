@@ -53,22 +53,22 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               alignItems: 'center',
               gap: 8,
               padding: '10px 16px',
-              borderRadius: 12,
-              background: item.type === 'success' ? 'var(--bg2)' : 'rgba(220,38,38,0.12)',
-              border: `1px solid ${item.type === 'success' ? 'var(--border)' : 'rgba(220,38,38,0.3)'}`,
-              boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
+              borderRadius: '10px',
+              background: item.type === 'success' ? 'var(--bg2)' : 'var(--red-fill)',
+              border: `2px solid ${item.type === 'success' ? 'var(--border)' : 'var(--red)'}`,
+              boxShadow: 'var(--shadow)',
               color: item.type === 'success' ? 'var(--text)' : 'var(--red)',
-              fontSize: '0.85rem',
-              fontFamily: 'DM Sans, sans-serif',
-              fontWeight: 500,
+              fontSize: '0.88rem',
+              fontFamily: "'Kalam', 'Itim', cursive",
+              fontWeight: 700,
               pointerEvents: 'auto',
               animation: 'toast-in 0.2s ease',
               whiteSpace: 'nowrap',
             }}
           >
             {item.type === 'success'
-              ? <CheckCircle size={15} color="var(--green)" strokeWidth={2} />
-              : <AlertCircle size={15} color="var(--red)" strokeWidth={2} />
+              ? <CheckCircle size={15} color="var(--green)" strokeWidth={2.5} />
+              : <AlertCircle size={15} color="var(--red)" strokeWidth={2.5} />
             }
             {item.message}
             <button

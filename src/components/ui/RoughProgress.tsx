@@ -13,7 +13,7 @@ interface RoughProgressProps {
  */
 export default function RoughProgress({
   value,
-  color = '#e8724a',
+  color = '#3d9b8a',
   height = 14,
   width = '100%',
 }: RoughProgressProps) {
@@ -39,9 +39,9 @@ export default function RoughProgress({
 
     // Track (background)
     rc.rectangle(pad, pad, w - pad * 2, h - pad * 2, {
-      fill: '#e0ddd5',
+      fill: '#ede9e3',
       fillStyle: 'solid',
-      stroke: '#2c2c2c',
+      stroke: '#c8c0b4',
       strokeWidth: 1.5,
       roughness: 1.2,
       bowing: 1,

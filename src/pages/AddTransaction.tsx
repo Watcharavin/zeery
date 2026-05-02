@@ -126,24 +126,39 @@ export default function AddTransaction() {
   const accentColor = type === 'income' ? 'var(--green)' : type === 'savings' ? 'var(--purple)' : 'var(--accent)'
 
   return (
-    <div style={{ maxWidth: '420px', margin: '0 auto', padding: '16px 16px 80px' }}>
+    <div style={{ maxWidth: '420px', margin: '0 auto', padding: '16px' }}>
 
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
         <button
           onClick={() => navigate('/')}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text2)', fontSize: '1.2rem', padding: '4px' }}
+          style={{
+            background: 'none', border: 'none', cursor: 'pointer',
+            color: 'var(--text2)', fontSize: '1.2rem', padding: '4px',
+          }}
         >
           ←
         </button>
-        <h1 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text)', flex: 1 }}>เพิ่มรายการ</h1>
+        <h1 style={{
+          fontFamily: "'Caveat', cursive",
+          fontSize: '1.8rem',
+          fontWeight: 700,
+          color: 'var(--text)',
+          flex: 1,
+          marginBottom: 0,
+        }}>
+          เพิ่มรายการ ✏️
+        </h1>
         <button
           onClick={() => navigate('/slip')}
           style={{
             display: 'flex', alignItems: 'center', gap: '6px',
-            padding: '7px 12px', borderRadius: '8px', border: '1px solid var(--border)',
+            padding: '7px 12px',
+            borderRadius: '10px',
+            border: '1px solid var(--border)',
             background: 'var(--bg3)', color: 'var(--text2)', cursor: 'pointer',
-            fontFamily: 'DM Sans, sans-serif', fontSize: '0.82rem', fontWeight: 500,
+            fontFamily: "'Kalam', 'Itim', cursive", fontSize: '0.82rem', fontWeight: 700,
+            boxShadow: 'var(--shadow-sm)',
           }}
         >
           <Camera size={14} strokeWidth={2} /> สแกน Slip
@@ -151,7 +166,15 @@ export default function AddTransaction() {
       </div>
 
       {/* Type selector */}
-      <div style={{ display: 'flex', background: 'var(--bg3)', borderRadius: '10px', padding: '4px', marginBottom: '20px' }}>
+      <div style={{
+        display: 'flex',
+        background: 'var(--bg3)',
+        borderRadius: '14px',
+        padding: '4px',
+        marginBottom: '20px',
+        border: '1px solid var(--border)',
+        boxShadow: 'var(--shadow-sm)',
+      }}>
         {(Object.keys(TYPE_LABELS) as TxType[]).map(t => (
           <button
             key={t}
@@ -159,15 +182,15 @@ export default function AddTransaction() {
             style={{
               flex: 1,
               padding: '8px',
-              borderRadius: '7px',
-              border: 'none',
+              borderRadius: type === t ? '10px' : '8px',
+              border: type === t ? `1px solid ${accentColor}` : '1px solid transparent',
               cursor: 'pointer',
-              fontFamily: 'DM Sans, sans-serif',
-              fontSize: '0.85rem',
-              fontWeight: 600,
+              fontFamily: "'Kalam', 'Itim', cursive",
+              fontSize: '0.88rem',
+              fontWeight: 700,
               background: type === t ? 'var(--bg2)' : 'transparent',
               color: type === t ? accentColor : 'var(--text2)',
-              boxShadow: type === t ? '0 1px 4px var(--border)' : 'none',
+              boxShadow: type === t ? 'var(--shadow-sm)' : 'none',
               transition: 'all 0.15s',
             }}
           >
@@ -182,18 +205,18 @@ export default function AddTransaction() {
         padding: '16px 0 8px',
         marginBottom: '4px',
       }}>
-        <span style={{ fontSize: '0.85rem', color: 'var(--text2)', marginRight: '4px' }}>฿</span>
+        <span style={{ fontSize: '0.85rem', color: 'var(--text2)', marginRight: '4px', fontFamily: "'Kalam', 'Itim', cursive" }}>฿</span>
         <span style={{
-          fontFamily: 'DM Mono, monospace',
-          fontSize: amount.toString().length > 7 ? '2.2rem' : '3rem',
-          fontWeight: 500,
+          fontFamily: "'Caveat', cursive",
+          fontSize: amount.toString().length > 7 ? '2.4rem' : '3.4rem',
+          fontWeight: 700,
           color: amount === 0 ? 'var(--text2)' : accentColor,
           transition: 'color 0.15s',
         }}>
           {fmt(amount)}
         </span>
         {amountStr.endsWith('.') && (
-          <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '3rem', color: accentColor }}>.</span>
+          <span style={{ fontFamily: "'Caveat', cursive", fontSize: '3.4rem', color: accentColor }}>.</span>
         )}
       </div>
 
@@ -206,12 +229,13 @@ export default function AddTransaction() {
             style={{
               flexShrink: 0,
               padding: '6px 14px',
-              borderRadius: '99px',
-              border: '1px solid var(--border)',
+              borderRadius: '10px',
+              border: amount === v ? `2px solid ${accentColor}` : '1px solid var(--border)',
               background: amount === v ? accentColor : 'var(--bg3)',
               color: amount === v ? '#fff' : 'var(--text)',
-              fontFamily: 'DM Mono, monospace',
-              fontSize: '0.82rem',
+              fontFamily: "'Caveat', cursive",
+              fontSize: '0.95rem',
+              fontWeight: 700,
               cursor: 'pointer',
               transition: 'all 0.15s',
             }}
@@ -229,13 +253,13 @@ export default function AddTransaction() {
             onClick={() => handleKey(k)}
             style={{
               padding: '18px 0',
-              borderRadius: '10px',
-              border: 'none',
-              background: k === '⌫' ? 'rgba(232,93,36,0.1)' : 'var(--bg3)',
-              color: k === '⌫' ? 'var(--accent)' : 'var(--text)',
-              fontSize: k === '⌫' ? '1.2rem' : '1.3rem',
-              fontFamily: 'DM Mono, monospace',
-              fontWeight: 500,
+              borderRadius: '14px',
+              border: '1px solid var(--border)',
+              background: k === '⌫' ? 'var(--red-fill)' : 'var(--bg3)',
+              color: k === '⌫' ? 'var(--red)' : 'var(--text)',
+              fontSize: k === '⌫' ? '1.2rem' : '1.5rem',
+              fontFamily: "'Caveat', cursive",
+              fontWeight: 700,
               cursor: 'pointer',
               transition: 'opacity 0.1s',
               WebkitTapHighlightColor: 'transparent',
@@ -250,7 +274,11 @@ export default function AddTransaction() {
       </div>
 
       {/* Category grid */}
-      <p style={{ fontSize: '0.72rem', color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '10px' }}>
+      <p style={{
+        fontSize: '0.72rem', color: 'var(--text2)',
+        textTransform: 'uppercase', letterSpacing: '0.06em',
+        marginBottom: '10px', fontFamily: "'Kalam', 'Itim', cursive",
+      }}>
         หมวดหมู่
       </p>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginBottom: '16px' }}>
@@ -266,10 +294,11 @@ export default function AddTransaction() {
                 alignItems: 'center',
                 gap: '4px',
                 padding: '10px 4px',
-                borderRadius: '10px',
-                border: selected ? `2px solid ${cat.color}` : '2px solid transparent',
+                borderRadius: '14px',
+                border: selected ? `2px solid ${cat.color}` : '1px solid var(--border)',
                 background: selected ? `${cat.color}18` : 'var(--bg3)',
                 cursor: 'pointer',
+                boxShadow: selected ? 'var(--shadow-sm)' : 'none',
                 transition: 'all 0.15s',
               }}
             >
@@ -277,8 +306,8 @@ export default function AddTransaction() {
               <span style={{
                 fontSize: '0.65rem',
                 color: selected ? cat.color : 'var(--text2)',
-                fontWeight: selected ? 600 : 400,
-                fontFamily: 'DM Sans, sans-serif',
+                fontWeight: 700,
+                fontFamily: "'Kalam', 'Itim', cursive",
               }}>
                 {cat.label}
               </span>
@@ -290,7 +319,11 @@ export default function AddTransaction() {
       {/* Date + Note */}
       <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
         <div style={{ flex: 1 }}>
-          <p style={{ fontSize: '0.72rem', color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '6px' }}>วันที่</p>
+          <p style={{
+            fontSize: '0.72rem', color: 'var(--text2)',
+            textTransform: 'uppercase', letterSpacing: '0.06em',
+            marginBottom: '6px', fontFamily: "'Kalam', 'Itim', cursive",
+          }}>วันที่</p>
           <input
             type="date"
             value={date}
@@ -298,11 +331,11 @@ export default function AddTransaction() {
             style={{
               width: '100%',
               padding: '10px 12px',
-              borderRadius: '8px',
+              borderRadius: '10px',
               border: '1px solid var(--border)',
               background: 'var(--bg3)',
               color: 'var(--text)',
-              fontFamily: 'DM Sans, sans-serif',
+              fontFamily: "'Kalam', 'Itim', cursive",
               fontSize: '0.85rem',
               outline: 'none',
               boxSizing: 'border-box',
@@ -312,10 +345,18 @@ export default function AddTransaction() {
 
         <div style={{ flex: 1 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-            <p style={{ fontSize: '0.72rem', color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>โน้ต</p>
+            <p style={{
+              fontSize: '0.72rem', color: 'var(--text2)',
+              textTransform: 'uppercase', letterSpacing: '0.06em',
+              fontFamily: "'Kalam', 'Itim', cursive",
+            }}>โน้ต</p>
             <button
               onClick={() => setShowNote(s => !s)}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.72rem', color: 'var(--accent)' }}
+              style={{
+                background: 'none', border: 'none', cursor: 'pointer',
+                fontSize: '0.72rem', color: 'var(--accent)',
+                fontFamily: "'Kalam', 'Itim', cursive", fontWeight: 700,
+              }}
             >
               {showNote ? 'ซ่อน' : 'เพิ่ม'}
             </button>
@@ -329,11 +370,11 @@ export default function AddTransaction() {
               style={{
                 width: '100%',
                 padding: '10px 12px',
-                borderRadius: '8px',
+                borderRadius: '10px',
                 border: '1px solid var(--border)',
                 background: 'var(--bg3)',
                 color: 'var(--text)',
-                fontFamily: 'DM Sans, sans-serif',
+                fontFamily: "'Kalam', 'Itim', cursive",
                 fontSize: '0.85rem',
                 outline: 'none',
                 boxSizing: 'border-box',
@@ -347,10 +388,12 @@ export default function AddTransaction() {
       {error && (
         <div style={{
           padding: '10px 14px',
-          borderRadius: '8px',
-          background: 'rgba(220,38,38,0.1)',
+          borderRadius: '10px',
+          border: '1px solid var(--red)',
+          background: 'var(--red-fill)',
           color: 'var(--red)',
           fontSize: '0.82rem',
+          fontFamily: "'Kalam', 'Itim', cursive",
           marginBottom: '12px',
         }}>
           {error}
@@ -361,10 +404,12 @@ export default function AddTransaction() {
       {!uid && (
         <div style={{
           padding: '10px 14px',
-          borderRadius: '8px',
-          background: 'rgba(217,119,6,0.1)',
+          borderRadius: '10px',
+          border: '1px solid var(--amber)',
+          background: 'var(--amber-fill)',
           color: 'var(--amber)',
           fontSize: '0.78rem',
+          fontFamily: "'Kalam', 'Itim', cursive",
           marginBottom: '12px',
         }}>
           ⚠️ กำลังเชื่อมต่อ Firebase — ถ้าค้างนาน ให้ตรวจสอบว่าเปิด Anonymous Auth ใน Firebase Console แล้วหรือยัง
@@ -378,16 +423,16 @@ export default function AddTransaction() {
         style={{
           width: '100%',
           padding: '16px',
-          borderRadius: '12px',
-          border: 'none',
+          borderRadius: '10px',
+          border: amount <= 0 ? '1px solid var(--border)' : `1px solid ${accentColor}`,
           background: amount <= 0 ? 'var(--bg3)' : accentColor,
           color: amount <= 0 ? 'var(--text2)' : '#fff',
-          fontFamily: 'DM Sans, sans-serif',
-          fontSize: '1rem',
+          fontFamily: "'Kalam', 'Itim', cursive",
+          fontSize: '1.1rem',
           fontWeight: 700,
           cursor: amount <= 0 ? 'not-allowed' : 'pointer',
+          boxShadow: amount <= 0 ? 'none' : 'var(--shadow)',
           transition: 'all 0.2s',
-          letterSpacing: '0.02em',
         }}
       >
         {saving ? 'กำลังบันทึก...' : `บันทึก ${amount > 0 ? '฿' + fmt(amount) : ''}`}

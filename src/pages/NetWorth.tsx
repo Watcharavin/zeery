@@ -88,40 +88,46 @@ export default function NetWorth() {
   }
 
   return (
-    <div style={{ maxWidth: '520px', margin: '0 auto', padding: '16px 16px 80px' }}>
-      <h1 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text)', marginBottom: '4px' }}>Net Worth</h1>
-      <p style={{ fontSize: '0.8rem', color: 'var(--text2)', marginBottom: '20px' }}>ทรัพย์สินและหนี้สินรวม</p>
+    <div style={{ maxWidth: '680px', margin: '0 auto', padding: '16px' }}>
+      <h1 style={{
+        fontFamily: "'Caveat', cursive",
+        fontSize: '1.8rem',
+        fontWeight: 700,
+        color: 'var(--text)',
+        marginBottom: '2px',
+      }}>Net Worth 📊</h1>
+      <p style={{ fontSize: '0.85rem', color: 'var(--text2)', marginBottom: '20px', fontFamily: "'Kalam', 'Itim', cursive" }}>ทรัพย์สินและหนี้สินรวม</p>
 
       {/* Summary card */}
       <div style={{
-        background: 'var(--bg2)', borderRadius: '16px', padding: '20px',
+        background: 'var(--bg2)', borderRadius: '14px', padding: '20px',
         marginBottom: '24px', border: '1px solid var(--border)',
-        display: 'flex', gap: '0', flexDirection: 'column',
+        boxShadow: 'var(--shadow)', display: 'flex', gap: '0', flexDirection: 'column',
       }}>
-        <p style={{ fontSize: '0.72rem', color: 'var(--text2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '6px' }}>Net Worth</p>
+        <p style={{ fontSize: '0.72rem', color: 'var(--text2)', fontFamily: "'Kalam', 'Itim', cursive", fontWeight: 700, marginBottom: '6px' }}>Net Worth รวม</p>
         <p style={{
-          fontFamily: 'DM Mono, monospace', fontSize: '2rem', fontWeight: 700,
+          fontFamily: "'Caveat', cursive", fontSize: '2.4rem', fontWeight: 700,
           color: positiveNet ? 'var(--green)' : 'var(--red)', marginBottom: '16px',
         }}>
           {positiveNet ? '' : '-'}฿{fmt(Math.abs(netWorth))}
         </p>
         <div style={{ display: 'flex', gap: '16px' }}>
           <div style={{ flex: 1 }}>
-            <p style={{ fontSize: '0.7rem', color: 'var(--text2)', marginBottom: '2px' }}>ทรัพย์สิน</p>
-            <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '1rem', fontWeight: 600, color: 'var(--green)' }}>
+            <p style={{ fontSize: '0.7rem', color: 'var(--text2)', marginBottom: '2px', fontFamily: "'Kalam', 'Itim', cursive" }}>ทรัพย์สิน</p>
+            <p style={{ fontFamily: "'Caveat', cursive", fontSize: '1.2rem', fontWeight: 700, color: 'var(--green)' }}>
               ฿{fmt(totalAssets)}
             </p>
           </div>
           <div style={{ flex: 1 }}>
-            <p style={{ fontSize: '0.7rem', color: 'var(--text2)', marginBottom: '2px' }}>หนี้สิน</p>
-            <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '1rem', fontWeight: 600, color: 'var(--red)' }}>
+            <p style={{ fontSize: '0.7rem', color: 'var(--text2)', marginBottom: '2px', fontFamily: "'Kalam', 'Itim', cursive" }}>หนี้สิน</p>
+            <p style={{ fontFamily: "'Caveat', cursive", fontSize: '1.2rem', fontWeight: 700, color: 'var(--red)' }}>
               ฿{fmt(totalLiabilities)}
             </p>
           </div>
           {totalAssets > 0 && (
             <div style={{ flex: 1 }}>
-              <p style={{ fontSize: '0.7rem', color: 'var(--text2)', marginBottom: '2px' }}>D/A ratio</p>
-              <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '1rem', fontWeight: 600, color: 'var(--text)' }}>
+              <p style={{ fontSize: '0.7rem', color: 'var(--text2)', marginBottom: '2px', fontFamily: "'Kalam', 'Itim', cursive" }}>D/A ratio</p>
+              <p style={{ fontFamily: "'Caveat', cursive", fontSize: '1.2rem', fontWeight: 700, color: 'var(--text)' }}>
                 {(totalLiabilities / totalAssets * 100).toFixed(1)}%
               </p>
             </div>
@@ -131,17 +137,17 @@ export default function NetWorth() {
         {/* Net worth bar */}
         {(totalAssets > 0 || totalLiabilities > 0) && (
           <div style={{ marginTop: '14px' }}>
-            <div style={{ height: '8px', background: 'var(--bg3)', borderRadius: '99px', overflow: 'hidden', display: 'flex' }}>
+            <div style={{ height: '10px', background: 'var(--bg3)', borderRadius: '4px', overflow: 'hidden', display: 'flex', border: '1px solid var(--border)' }}>
               {totalAssets > 0 && (
                 <div style={{
                   width: `${Math.min(100, (totalAssets / (totalAssets + totalLiabilities)) * 100)}%`,
-                  background: 'var(--green)', borderRadius: '99px 0 0 99px',
+                  background: 'var(--green)',
                 }} />
               )}
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px' }}>
-              <span style={{ fontSize: '0.65rem', color: 'var(--green)' }}>ทรัพย์สิน</span>
-              <span style={{ fontSize: '0.65rem', color: 'var(--red)' }}>หนี้สิน</span>
+              <span style={{ fontSize: '0.65rem', color: 'var(--green)', fontFamily: "'Kalam', 'Itim', cursive", fontWeight: 700 }}>ทรัพย์สิน</span>
+              <span style={{ fontSize: '0.65rem', color: 'var(--red)', fontFamily: "'Kalam', 'Itim', cursive", fontWeight: 700 }}>หนี้สิน</span>
             </div>
           </div>
         )}
@@ -206,7 +212,7 @@ export default function NetWorth() {
       {form && (
         <div
           style={{
-            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)',
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.45)',
             display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
             zIndex: 200,
           }}
@@ -214,25 +220,27 @@ export default function NetWorth() {
         >
           <div style={{
             background: 'var(--bg2)', borderRadius: '20px 20px 0 0',
+            border: '1px solid var(--border)',
             padding: '24px 20px 40px', width: '100%', maxWidth: '520px',
           }}>
-            <p style={{ fontWeight: 600, fontSize: '1rem', color: 'var(--text)', marginBottom: '20px' }}>
-              {form.id ? 'แก้ไข' : 'เพิ่ม'}{form.kind === 'asset' ? 'ทรัพย์สิน' : 'หนี้สิน'}
+            <p style={{ fontFamily: "'Caveat', cursive", fontWeight: 700, fontSize: '1.4rem', color: 'var(--text)', marginBottom: '20px' }}>
+              {form.id ? '✏️ แก้ไข' : '+ เพิ่ม'}{form.kind === 'asset' ? 'ทรัพย์สิน' : 'หนี้สิน'}
             </p>
 
             {/* Type selector */}
-            <p style={{ fontSize: '0.75rem', color: 'var(--text2)', marginBottom: '8px' }}>ประเภท</p>
+            <p style={{ fontSize: '0.75rem', color: 'var(--text2)', marginBottom: '8px', fontFamily: "'Kalam', 'Itim', cursive", fontWeight: 700 }}>ประเภท</p>
             <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
               {(form.kind === 'asset' ? ASSET_TYPES : LIABILITY_TYPES).map(t => (
                 <button
                   key={t.id}
                   onClick={() => setForm(f => f ? { ...f, type: t.id } : f)}
                   style={{
-                    padding: '6px 12px', borderRadius: '8px', cursor: 'pointer',
+                    padding: '6px 14px', borderRadius: '10px', cursor: 'pointer',
                     border: `1px solid ${form.type === t.id ? 'var(--accent)' : 'var(--border)'}`,
                     background: form.type === t.id ? 'var(--accent)' : 'var(--bg3)',
-                    color: form.type === t.id ? '#fff' : 'var(--text2)',
-                    fontSize: '0.8rem', fontFamily: 'DM Sans, sans-serif',
+                    color: form.type === t.id ? '#fdfcf7' : 'var(--text2)',
+                    fontSize: '0.8rem', fontFamily: "'Kalam', 'Itim', cursive", fontWeight: 700,
+                    boxShadow: form.type === t.id ? 'var(--shadow-sm)' : 'none',
                   }}
                 >
                   {t.emoji} {t.label}
@@ -241,7 +249,7 @@ export default function NetWorth() {
             </div>
 
             {/* Label input */}
-            <p style={{ fontSize: '0.75rem', color: 'var(--text2)', marginBottom: '6px' }}>ชื่อ</p>
+            <p style={{ fontSize: '0.75rem', color: 'var(--text2)', marginBottom: '6px', fontFamily: "'Kalam', 'Itim', cursive", fontWeight: 700 }}>ชื่อ</p>
             <input
               type="text"
               value={form.label}
@@ -249,15 +257,15 @@ export default function NetWorth() {
               placeholder="เช่น บัญชีกสิกร, คอนโด"
               autoFocus
               style={{
-                width: '100%', padding: '10px 12px', borderRadius: '10px',
+                width: '100%', padding: '10px 12px', borderRadius: '8px',
                 border: '1px solid var(--border)', background: 'var(--bg3)',
-                color: 'var(--text)', fontFamily: 'DM Sans, sans-serif', fontSize: '0.95rem',
+                color: 'var(--text)', fontFamily: "'Kalam', 'Itim', cursive", fontSize: '1rem',
                 outline: 'none', boxSizing: 'border-box', marginBottom: '14px',
               }}
             />
 
             {/* Value input */}
-            <p style={{ fontSize: '0.75rem', color: 'var(--text2)', marginBottom: '6px' }}>มูลค่า (บาท)</p>
+            <p style={{ fontSize: '0.75rem', color: 'var(--text2)', marginBottom: '6px', fontFamily: "'Kalam', 'Itim', cursive", fontWeight: 700 }}>มูลค่า (บาท)</p>
             <input
               type="number"
               value={form.value}
@@ -265,9 +273,9 @@ export default function NetWorth() {
               placeholder="0"
               onKeyDown={e => e.key === 'Enter' && handleSave()}
               style={{
-                width: '100%', padding: '10px 12px', borderRadius: '10px',
+                width: '100%', padding: '10px 12px', borderRadius: '8px',
                 border: '1px solid var(--border)', background: 'var(--bg3)',
-                color: 'var(--text)', fontFamily: 'DM Mono, monospace', fontSize: '1.1rem',
+                color: 'var(--text)', fontFamily: "'Caveat', cursive", fontSize: '1.3rem',
                 outline: 'none', boxSizing: 'border-box', marginBottom: '20px',
               }}
             />
@@ -277,9 +285,10 @@ export default function NetWorth() {
                 onClick={handleSave}
                 disabled={saving}
                 style={{
-                  flex: 1, padding: '12px', borderRadius: '12px', border: 'none',
-                  background: 'var(--accent)', color: '#fff', fontWeight: 600,
-                  fontFamily: 'DM Sans, sans-serif', fontSize: '0.95rem', cursor: 'pointer',
+                  flex: 1, padding: '12px', borderRadius: '10px',
+                  border: '1px solid var(--border)', background: 'var(--accent)', color: '#fdfcf7', fontWeight: 700,
+                  fontFamily: "'Kalam', 'Itim', cursive", fontSize: '0.95rem', cursor: 'pointer',
+                  boxShadow: 'var(--shadow-sm)',
                 }}
               >
                 {saving ? 'กำลังบันทึก...' : 'บันทึก'}
@@ -287,10 +296,10 @@ export default function NetWorth() {
               <button
                 onClick={() => setForm(null)}
                 style={{
-                  padding: '12px 16px', borderRadius: '12px',
+                  padding: '12px 16px', borderRadius: '10px',
                   border: '1px solid var(--border)', background: 'var(--bg3)',
-                  color: 'var(--text2)', fontFamily: 'DM Sans, sans-serif',
-                  fontSize: '0.95rem', cursor: 'pointer',
+                  color: 'var(--text2)', fontFamily: "'Kalam', 'Itim', cursive", fontWeight: 700,
+                  fontSize: '0.95rem', cursor: 'pointer', boxShadow: 'var(--shadow-sm)',
                 }}
               >
                 ยกเลิก
@@ -313,14 +322,15 @@ function Section({
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-        <div style={{ width: '3px', height: '16px', background: accent, borderRadius: '2px', marginRight: '8px' }} />
-        <span style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text)', flex: 1 }}>{title}</span>
+        <div style={{ width: '4px', height: '18px', background: accent, borderRadius: '2px', marginRight: '10px', border: '1px solid var(--border)' }} />
+        <span style={{ fontFamily: "'Caveat', cursive", fontWeight: 700, fontSize: '1.1rem', color: 'var(--text)', flex: 1 }}>{title}</span>
         <button
           onClick={onAdd}
           style={{
-            padding: '4px 12px', borderRadius: '8px', border: '1px solid var(--border)',
-            background: 'var(--bg3)', color: 'var(--text2)', cursor: 'pointer',
-            fontSize: '0.78rem', fontFamily: 'DM Sans, sans-serif',
+            padding: '4px 14px', borderRadius: '10px',
+            border: '1px solid var(--border)', background: 'var(--bg3)', color: 'var(--text2)',
+            cursor: 'pointer', fontSize: '0.8rem', fontFamily: "'Kalam', 'Itim', cursive",
+            fontWeight: 700, boxShadow: 'var(--shadow-sm)',
           }}
         >
           + เพิ่ม
@@ -341,22 +351,25 @@ function ItemRow({
 }) {
   return (
     <div style={{
-      background: 'var(--bg2)', borderRadius: '12px', padding: '12px 14px',
-      border: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: '10px',
+      background: 'var(--bg2)', borderRadius: '14px', padding: '12px 14px',
+      border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)',
+      display: 'flex', alignItems: 'center', gap: '10px',
     }}>
       <span style={{ fontSize: '1.2rem' }}>{emoji}</span>
       <div style={{ flex: 1, minWidth: 0 }}>
-        <p style={{ fontWeight: 500, fontSize: '0.88rem', color: 'var(--text)', marginBottom: '2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</p>
-        <p style={{ fontSize: '0.72rem', color: 'var(--text2)' }}>{sub}</p>
+        <p style={{ fontFamily: "'Kalam', 'Itim', cursive", fontWeight: 700, fontSize: '0.9rem', color: 'var(--text)', marginBottom: '2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</p>
+        <p style={{ fontSize: '0.72rem', color: 'var(--text2)', fontFamily: "'Kalam', 'Itim', cursive" }}>{sub}</p>
       </div>
-      <p style={{ fontFamily: 'DM Mono, monospace', fontWeight: 600, fontSize: '0.95rem', color: valueColor, marginRight: '8px' }}>
+      <p style={{ fontFamily: "'Caveat', cursive", fontWeight: 700, fontSize: '1.05rem', color: valueColor, marginRight: '8px' }}>
         ฿{value.toLocaleString('th-TH', { maximumFractionDigits: 0 })}
       </p>
       <button
         onClick={onEdit}
         style={{
-          padding: '4px 8px', borderRadius: '6px', border: '1px solid var(--border)',
-          background: 'var(--bg3)', color: 'var(--text2)', cursor: 'pointer', fontSize: '0.72rem',
+          padding: '4px 10px', borderRadius: '10px',
+          border: '1px solid var(--border)', background: 'var(--bg3)', color: 'var(--text2)',
+          cursor: 'pointer', fontSize: '0.72rem', fontFamily: "'Kalam', 'Itim', cursive", fontWeight: 700,
+          boxShadow: 'var(--shadow-sm)',
         }}
       >แก้</button>
       <ConfirmButton onConfirm={onDelete} size={11} />
@@ -367,10 +380,10 @@ function ItemRow({
 function EmptyRow({ label }: { label: string }) {
   return (
     <div style={{
-      background: 'var(--bg2)', borderRadius: '12px', padding: '16px',
+      background: 'var(--bg2)', borderRadius: '14px', padding: '16px',
       border: '1px dashed var(--border)', textAlign: 'center',
     }}>
-      <p style={{ fontSize: '0.8rem', color: 'var(--text2)' }}>{label}</p>
+      <p style={{ fontSize: '0.85rem', color: 'var(--text2)', fontFamily: "'Kalam', 'Itim', cursive" }}>{label}</p>
     </div>
   )
 }

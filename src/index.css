@@ -2,105 +2,95 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Doodle / Hand-drawn Design Tokens ─────────────────────────────────────── */
+/* ── Design Tokens ───────────────────────────────────────────────────────────── */
 :root {
-  /* backgrounds — cream paper */
-  --bg:      #fdfcf7;
-  --bg2:     #faf8f0;
-  --bg3:     #f0ede3;
+  /* backgrounds — darker bg makes white cards pop */
+  --bg:      #e7e3dc;
+  --bg2:     #fefefe;
+  --bg3:     #dedad4;
 
-  /* ink colors */
-  --text:    #2c2c2c;
-  --text2:   #7a7060;
-  --border:  #2c2c2c;
+  /* text */
+  --text:    #26211d;
+  --text2:   #9c9490;
 
-  /* brand palette — desaturated pastels */
-  --accent:       #e8724a;   /* warm orange */
-  --accent-fill:  #fff0ea;   /* light orange tint for card fills */
-  --green:        #5a9e3a;
-  --green-fill:   #edf6e7;
-  --red:          #d45c5c;
-  --red-fill:     #fdf0f0;
-  --purple:       #7b6bbf;
-  --purple-fill:  #f0eefb;
-  --amber:        #c9952a;
-  --amber-fill:   #fdf6e3;
-  --blue:         #4a8fc4;
-  --blue-fill:    #e8f3fb;
+  /* border */
+  --border:  rgba(0,0,0,0.10);
 
-  /* hard-shadow offset for doodle feel */
-  --shadow:     3px 3px 0 #2c2c2c;
-  --shadow-sm:  2px 2px 0 #2c2c2c;
-  --shadow-lg:  5px 5px 0 #2c2c2c;
+  /* brand */
+  --accent:       #2d9b87;
+  --accent-fill:  rgba(45,155,135,0.10);
+  --green:        #2d9b87;
+  --green-fill:   rgba(45,155,135,0.10);
+  --red:          #d95252;
+  --red-fill:     rgba(217,82,82,0.10);
+  --purple:       #8b7fc8;
+  --purple-fill:  rgba(139,127,200,0.10);
+  --amber:        #c49a10;
+  --amber-fill:   rgba(196,154,16,0.10);
+  --blue:         #5abaac;
+  --blue-fill:    rgba(90,186,172,0.10);
+  --pink:         #d4729a;
+  --pink-fill:    rgba(212,114,154,0.10);
 
-  /* border width */
-  --bw: 2px;
+  /* layered shadows for realistic depth */
+  --shadow:    0 1px 3px rgba(0,0,0,0.06), 0 6px 20px rgba(0,0,0,0.08);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.07), 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-lg: 0 4px 8px rgba(0,0,0,0.08), 0 16px 40px rgba(0,0,0,0.12);
+
+  --bw: 1px;
+  --radius: 16px;
 }
 
-/* ── Reset ──────────────────────────────────────────────────────────────────── */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* ── Reset ───────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── Base typography ────────────────────────────────────────────────────────── */
+/* ── Base typography ─────────────────────────────────────────────────────────── */
 body {
   font-family: 'Kalam', 'Itim', cursive;
   background-color: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
 }
 
-#root {
-  min-height: 100svh;
-}
+#root { min-height: 100svh; }
 
-/* Caveat for headings/labels */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Caveat', cursive;
-}
+h1, h2, h3, h4, h5, h6 { font-family: 'Caveat', cursive; }
 
-/* Caveat for numbers (replaces DM Mono) */
-.font-mono-num {
-  font-family: 'Caveat', cursive;
+.font-mono-num { font-family: 'Caveat', cursive; font-weight: 700; }
+
+/* ── Global label style — uppercase tracking ─────────────────────────────────── */
+.label {
+  font-size: 0.68rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text2);
+  font-family: 'Kalam', 'Itim', cursive;
 }
 
-/* ── Doodle utilities ───────────────────────────────────────────────────────── */
-
-/* Hard-shadow card — the core doodle card style */
+/* ── Card ────────────────────────────────────────────────────────────────────── */
 .doodle-card {
   background: var(--bg2);
   border: var(--bw) solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius);
   box-shadow: var(--shadow);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: box-shadow 0.2s ease;
 }
-.doodle-card:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: var(--shadow-lg);
-}
+.doodle-card:hover { box-shadow: var(--shadow-lg); }
 
-/* Doodle button */
+/* ── Button ──────────────────────────────────────────────────────────────────── */
 .doodle-btn {
   font-family: 'Kalam', 'Itim', cursive;
   border: var(--bw) solid var(--border);
-  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-  box-shadow: var(--shadow-sm);
+  border-radius: 10px;
   cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  transition: background 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
 }
-.doodle-btn:hover {
-  transform: translate(-1px, -2px) rotate(-0.5deg);
-  box-shadow: var(--shadow);
-}
-.doodle-btn:active {
-  transform: translate(1px, 1px);
-  box-shadow: none;
-}
+.doodle-btn:hover  { box-shadow: var(--shadow-sm); }
+.doodle-btn:active { opacity: 0.8; }
 
-/* Doodle input */
+/* ── Input ───────────────────────────────────────────────────────────────────── */
 .doodle-input {
   font-family: 'Kalam', 'Itim', cursive;
   border: none;
@@ -109,31 +99,31 @@ h1, h2, h3, h4, h5, h6 {
   outline: none;
   color: var(--text);
 }
-.doodle-input:focus {
-  border-bottom-color: var(--accent);
-}
+.doodle-input:focus { border-bottom-color: var(--accent); }
 
-/* ── Animations ─────────────────────────────────────────────────────────────── */
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+/* ── Animations ──────────────────────────────────────────────────────────────── */
+@keyframes spin         { to { transform: rotate(360deg); } }
+@keyframes dot-bounce   { 0%,80%,100% { transform: translateY(0); opacity:.4 } 40% { transform: translateY(-4px); opacity:1 } }
+@keyframes blink        { 0%,100% { opacity:.7 } 50% { opacity:0 } }
+@keyframes slide-up     { from { opacity:0; transform:translateY(6px) } to { opacity:1; transform:none } }
 
-@keyframes dot-bounce {
-  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
-  40% { transform: translateY(-4px); opacity: 1; }
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 0; }
-}
-
-/* ── Dashboard grid ─────────────────────────────────────────────────────────── */
-@media (max-width: 767px) {
+/* ── Dashboard grid ──────────────────────────────────────────────────────────── */
+@media (max-width: 1023px) {
   .dashboard-grid {
     grid-template-columns: repeat(2, 1fr) !important;
   }
+  .dashboard-grid > *[style*="span 4"],
   .dashboard-grid > *[style*="span 2"] {
     grid-column: span 2 !important;
   }
+}
+
+/* ── Page content max-width ──────────────────────────────────────────────────── */
+.page-content      { max-width: 960px;  margin: 0 auto; }
+.page-content-wide { max-width: 1280px; margin: 0 auto; }
+
+/* ── AI Chat container height — desktop has no BottomNav ─────────────────────── */
+.ai-chat-container { height: calc(100svh - 56px - 64px); } /* mobile: -topbar -bottomnav */
+@media (min-width: 768px) {
+  .ai-chat-container { height: calc(100svh - 56px); }      /* desktop: -topbar only */
 }

@@ -27,7 +27,7 @@ function App() {
         minHeight: '100svh',
         background: 'var(--bg)',
         color: 'var(--text2)',
-        fontFamily: 'DM Sans, sans-serif',
+        fontFamily: "'Kalam', 'Itim', cursive",
       }}>
         <p>กำลังโหลด...</p>
       </div>

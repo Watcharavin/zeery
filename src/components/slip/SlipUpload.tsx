@@ -48,16 +48,17 @@ export default function SlipUpload({ onImage }: Props) {
         alignItems: 'center',
         gap: '12px',
         cursor: 'pointer',
-        background: dragOver ? 'rgba(232,93,36,0.04)' : 'var(--bg3)',
+        background: dragOver ? 'var(--accent-fill)' : 'var(--bg3)',
+        boxShadow: dragOver ? 'var(--shadow)' : 'none',
         transition: 'all 0.2s',
         outline: 'none',
       }}
     >
       <span style={{ fontSize: '2.5rem' }}>📷</span>
-      <p style={{ color: 'var(--text)', fontWeight: 500, fontSize: '0.95rem', textAlign: 'center' }}>
+      <p style={{ color: 'var(--text)', fontWeight: 700, fontSize: '0.95rem', textAlign: 'center', fontFamily: "'Kalam', 'Itim', cursive" }}>
         วาง slip หรือคลิกเลือกรูป
       </p>
-      <p style={{ color: 'var(--text2)', fontSize: '0.78rem', textAlign: 'center' }}>
+      <p style={{ color: 'var(--text2)', fontSize: '0.78rem', textAlign: 'center', fontFamily: "'Kalam', 'Itim', cursive" }}>
         รองรับ JPG, PNG · วาง Ctrl+V / ⌘V ได้เลย
       </p>
       <input

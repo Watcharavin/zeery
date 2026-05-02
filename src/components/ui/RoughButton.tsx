@@ -20,8 +20,8 @@ export default function RoughButton({
   children,
   onClick,
   disabled = false,
-  fill = '#faf8f0',
-  stroke = '#2c2c2c',
+  fill = '#faf9f6',
+  stroke = '#c8c0b4',
   style,
   className,
   type = 'button',
@@ -77,35 +77,29 @@ export default function RoughButton({
         fontFamily: "'Kalam', 'Itim', cursive",
         fontSize: '0.95rem',
         fontWeight: 700,
-        color: disabled ? '#aaa9a0' : '#2c2c2c',
-        boxShadow: disabled ? 'none' : '3px 3px 0 #2c2c2c',
-        borderRadius: '255px 15px 225px 15px / 15px 225px 15px 255px',
-        transition: 'transform 0.12s ease, box-shadow 0.12s ease',
+        color: disabled ? '#aaa9a0' : 'var(--text)',
+        boxShadow: disabled ? 'none' : 'var(--shadow-sm)',
+        borderRadius: '10px',
+        transition: 'box-shadow 0.15s ease, opacity 0.15s ease',
         ...style,
       }}
       onMouseEnter={e => {
         if (disabled) return
-        const el = e.currentTarget
-        el.style.transform = 'translate(-1px, -2px) rotate(-0.5deg)'
-        el.style.boxShadow = '5px 5px 0 #2c2c2c'
+        e.currentTarget.style.boxShadow = 'var(--shadow)'
       }}
       onMouseLeave={e => {
         if (disabled) return
-        const el = e.currentTarget
-        el.style.transform = ''
-        el.style.boxShadow = '3px 3px 0 #2c2c2c'
+        e.currentTarget.style.boxShadow = 'var(--shadow-sm)'
       }}
       onMouseDown={e => {
         if (disabled) return
-        const el = e.currentTarget
-        el.style.transform = 'translate(1px, 1px)'
-        el.style.boxShadow = 'none'
+        e.currentTarget.style.opacity = '0.75'
+        e.currentTarget.style.boxShadow = 'none'
       }}
       onMouseUp={e => {
         if (disabled) return
-        const el = e.currentTarget
-        el.style.transform = ''
-        el.style.boxShadow = '3px 3px 0 #2c2c2c'
+        e.currentTarget.style.opacity = ''
+        e.currentTarget.style.boxShadow = 'var(--shadow-sm)'
       }}
     >
       {/* Rough SVG border */}

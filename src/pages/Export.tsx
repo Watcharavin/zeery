@@ -100,11 +100,9 @@ export default function Export() {
   const [jsonLoading, setJsonLoading] = useState(false)
   const [pdfLoading, setPdfLoading] = useState(false)
   const [preview, setPreview] = useState<PreviewData | null>(null)
-  // Separate state for the print area — loaded on demand, triggers window.print()
   const [printData, setPrintData] = useState<PDFData | null>(null)
   const [shouldPrint, setShouldPrint] = useState(false)
 
-  // Fire window.print() after printData has rendered into the DOM
   useEffect(() => {
     if (shouldPrint && printData) {
       setShouldPrint(false)
@@ -112,7 +110,6 @@ export default function Export() {
     }
   }, [shouldPrint, printData])
 
-  // Fetch filtered transactions (shared by preview + download)
   const fetchCSVTxs = (): Promise<Transaction[]> => {
     return new Promise(resolve => {
       if (!uid) { resolve([]); return }
@@ -239,9 +236,19 @@ export default function Export() {
         }
       `}</style>
 
-      <div style={{ maxWidth: '520px', margin: '0 auto', padding: '16px 16px 80px' }}>
-        <h1 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text)', marginBottom: '4px' }}>Export</h1>
-        <p style={{ fontSize: '0.8rem', color: 'var(--text2)', marginBottom: '24px' }}>ดาวน์โหลดข้อมูลของคุณ</p>
+      <div style={{ maxWidth: '760px', margin: '0 auto', padding: '16px' }}>
+        <h1 style={{
+          fontFamily: "'Caveat', cursive",
+          fontSize: '1.8rem',
+          fontWeight: 700,
+          color: 'var(--text)',
+          marginBottom: '2px',
+        }}>
+          Export 📤
+        </h1>
+        <p style={{ fontSize: '0.85rem', color: 'var(--text2)', marginBottom: '24px', fontFamily: "'Kalam', 'Itim', cursive" }}>
+          ดาวน์โหลดข้อมูลของคุณ
+        </p>
 
         {/* CSV */}
         <ExportCard
@@ -252,24 +259,16 @@ export default function Export() {
         >
           <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
             <div style={{ flex: 1, minWidth: '120px' }}>
-              <label style={{ fontSize: '0.72rem', color: 'var(--text2)', display: 'block', marginBottom: '4px' }}>จาก</label>
-              <select
-                value={fromMonth}
-                onChange={e => setFromMonth(e.target.value)}
-                style={selectStyle}
-              >
+              <label style={{ fontSize: '0.72rem', color: 'var(--text2)', display: 'block', marginBottom: '4px', fontFamily: "'Kalam', 'Itim', cursive" }}>จาก</label>
+              <select value={fromMonth} onChange={e => setFromMonth(e.target.value)} style={selectStyle}>
                 {MONTHS_BACK.map(m => (
                   <option key={m} value={m}>{monthLabel(m)}</option>
                 ))}
               </select>
             </div>
             <div style={{ flex: 1, minWidth: '120px' }}>
-              <label style={{ fontSize: '0.72rem', color: 'var(--text2)', display: 'block', marginBottom: '4px' }}>ถึง</label>
-              <select
-                value={toMonth}
-                onChange={e => setToMonth(e.target.value)}
-                style={selectStyle}
-              >
+              <label style={{ fontSize: '0.72rem', color: 'var(--text2)', display: 'block', marginBottom: '4px', fontFamily: "'Kalam', 'Itim', cursive" }}>ถึง</label>
+              <select value={toMonth} onChange={e => setToMonth(e.target.value)} style={selectStyle}>
                 {MONTHS_BACK.map(m => (
                   <option key={m} value={m}>{monthLabel(m)}</option>
                 ))}
@@ -277,11 +276,7 @@ export default function Export() {
             </div>
           </div>
           <div style={{ display: 'flex', gap: '8px' }}>
-            <button
-              onClick={handleCSVPreview}
-              disabled={csvLoading}
-              style={{ ...ghostBtn, flex: 1 }}
-            >
+            <button onClick={handleCSVPreview} disabled={csvLoading} style={{ ...ghostBtn, flex: 1 }}>
               <Eye size={14} strokeWidth={2} /> ดูตัวอย่าง
             </button>
             <ActionButton onClick={handleCSV} loading={csvLoading} color="var(--green)">
@@ -298,7 +293,7 @@ export default function Export() {
           columns="รายรับ, รายจ่าย, ออม, รายจ่ายแยกหมวด, รายการทั้งหมด"
         >
           <div style={{ marginBottom: '12px' }}>
-            <label style={{ fontSize: '0.72rem', color: 'var(--text2)', display: 'block', marginBottom: '4px' }}>เดือน</label>
+            <label style={{ fontSize: '0.72rem', color: 'var(--text2)', display: 'block', marginBottom: '4px', fontFamily: "'Kalam', 'Itim', cursive" }}>เดือน</label>
             <select value={pdfMonth} onChange={e => setPdfMonth(e.target.value)} style={selectStyle}>
               {MONTHS_BACK.map(m => <option key={m} value={m}>{monthLabel(m)}</option>)}
             </select>
@@ -321,11 +316,7 @@ export default function Export() {
           columns="transactions + budgets + goals + assets + liabilities + recurring"
         >
           <div style={{ display: 'flex', gap: '8px' }}>
-            <button
-              onClick={handleJSONPreview}
-              disabled={jsonLoading}
-              style={{ ...ghostBtn, flex: 1 }}
-            >
+            <button onClick={handleJSONPreview} disabled={jsonLoading} style={{ ...ghostBtn, flex: 1 }}>
               <Eye size={14} strokeWidth={2} /> ดูตัวอย่าง
             </button>
             <ActionButton onClick={handleJSON} loading={jsonLoading} color="var(--purple)">
@@ -339,22 +330,33 @@ export default function Export() {
       {preview && (
         <div
           style={{
-            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)',
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)',
             display: 'flex', alignItems: 'flex-end', justifyContent: 'center', zIndex: 300,
           }}
           onClick={e => { if (e.target === e.currentTarget) setPreview(null) }}
         >
           <div style={{
-            background: 'var(--bg2)', borderRadius: '20px 20px 0 0',
-            width: '100%', maxWidth: '600px', maxHeight: '80vh',
-            display: 'flex', flexDirection: 'column',
+            background: 'var(--bg2)',
+            borderRadius: '20px 20px 0 0',
+            borderTop: '1px solid var(--border)',
+            borderLeft: '1px solid var(--border)',
+            borderRight: '1px solid var(--border)',
+            width: '100%',
+            maxWidth: '600px',
+            maxHeight: '80vh',
+            display: 'flex',
+            flexDirection: 'column',
           }}>
             {/* Modal header */}
             <div style={{
               display: 'flex', alignItems: 'center', padding: '16px 20px',
               borderBottom: '1px solid var(--border)', flexShrink: 0,
             }}>
-              <span style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--text)', flex: 1 }}>
+              <span style={{
+                fontFamily: "'Caveat', cursive",
+                fontWeight: 700, fontSize: '1.1rem',
+                color: 'var(--text)', flex: 1,
+              }}>
                 {preview.kind === 'csv'
                   ? `ตัวอย่าง CSV — ${preview.total} รายการ`
                   : preview.kind === 'json'
@@ -371,7 +373,7 @@ export default function Export() {
             <div style={{ overflowY: 'auto', flex: 1, padding: '0' }}>
               {preview.kind === 'csv' && (
                 preview.rows.length === 0 ? (
-                  <p style={{ padding: '32px', textAlign: 'center', color: 'var(--text2)', fontSize: '0.85rem' }}>
+                  <p style={{ padding: '32px', textAlign: 'center', color: 'var(--text2)', fontSize: '0.85rem', fontFamily: "'Kalam', 'Itim', cursive" }}>
                     ไม่มีรายการในช่วงนี้
                   </p>
                 ) : (
@@ -379,7 +381,7 @@ export default function Export() {
                     <thead>
                       <tr style={{ background: 'var(--bg3)', position: 'sticky', top: 0 }}>
                         {['วันที่', 'ชื่อ', 'หมวด', 'จำนวน', 'โน้ต'].map(h => (
-                          <th key={h} style={{ padding: '10px 12px', textAlign: 'left', color: 'var(--text2)', fontWeight: 600, whiteSpace: 'nowrap' }}>{h}</th>
+                          <th key={h} style={{ padding: '10px 12px', textAlign: 'left', color: 'var(--text2)', fontWeight: 700, whiteSpace: 'nowrap', fontFamily: "'Kalam', 'Itim', cursive" }}>{h}</th>
                         ))}
                       </tr>
                     </thead>
@@ -388,13 +390,13 @@ export default function Export() {
                         const cat = categories.find(c => c.id === tx.catId)
                         return (
                           <tr key={tx.id} style={{ borderBottom: '1px solid var(--border)', background: i % 2 === 0 ? 'transparent' : 'var(--bg3)' }}>
-                            <td style={{ padding: '8px 12px', color: 'var(--text2)', fontFamily: 'DM Mono, monospace', whiteSpace: 'nowrap' }}>{tx.date}</td>
-                            <td style={{ padding: '8px 12px', color: 'var(--text)', maxWidth: '140px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{tx.name}</td>
-                            <td style={{ padding: '8px 12px', color: 'var(--text2)', whiteSpace: 'nowrap' }}>{cat?.emoji} {cat?.label}</td>
-                            <td style={{ padding: '8px 12px', fontFamily: 'DM Mono, monospace', fontWeight: 600, color: tx.amount > 0 ? 'var(--green)' : 'var(--red)', whiteSpace: 'nowrap' }}>
+                            <td style={{ padding: '8px 12px', color: 'var(--text2)', fontFamily: "'Caveat', cursive", whiteSpace: 'nowrap' }}>{tx.date}</td>
+                            <td style={{ padding: '8px 12px', color: 'var(--text)', maxWidth: '140px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontFamily: "'Kalam', 'Itim', cursive" }}>{tx.name}</td>
+                            <td style={{ padding: '8px 12px', color: 'var(--text2)', whiteSpace: 'nowrap', fontFamily: "'Kalam', 'Itim', cursive" }}>{cat?.emoji} {cat?.label}</td>
+                            <td style={{ padding: '8px 12px', fontFamily: "'Caveat', cursive", fontWeight: 700, color: tx.amount > 0 ? 'var(--green)' : 'var(--red)', whiteSpace: 'nowrap' }}>
                               {tx.amount > 0 ? '+' : ''}{tx.amount.toLocaleString('th-TH')}
                             </td>
-                            <td style={{ padding: '8px 12px', color: 'var(--text2)', maxWidth: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{tx.note ?? ''}</td>
+                            <td style={{ padding: '8px 12px', color: 'var(--text2)', maxWidth: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontFamily: "'Kalam', 'Itim', cursive" }}>{tx.note ?? ''}</td>
                           </tr>
                         )
                       })}
@@ -406,7 +408,7 @@ export default function Export() {
               {preview.kind === 'json' && (
                 <pre style={{
                   margin: 0, padding: '16px 20px',
-                  fontFamily: 'DM Mono, monospace', fontSize: '0.72rem',
+                  fontFamily: "'Caveat', cursive", fontSize: '0.78rem',
                   color: 'var(--text)', lineHeight: 1.6,
                   whiteSpace: 'pre-wrap', wordBreak: 'break-all',
                 }}>
@@ -423,9 +425,12 @@ export default function Export() {
                 <button
                   onClick={handlePrint}
                   style={{
-                    width: '100%', padding: '11px', borderRadius: '10px', border: 'none',
-                    background: 'var(--accent)', color: '#fff', fontWeight: 600,
-                    fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', cursor: 'pointer',
+                    width: '100%', padding: '11px',
+                    borderRadius: '10px',
+                    border: '2px solid var(--accent)',
+                    background: 'var(--accent)', color: '#fff', fontWeight: 700,
+                    fontFamily: "'Kalam', 'Itim', cursive", fontSize: '0.9rem', cursor: 'pointer',
+                    boxShadow: 'var(--shadow)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '7px',
                   }}
                 >
@@ -439,10 +444,14 @@ export default function Export() {
                     setPreview(null)
                   }}
                   style={{
-                    width: '100%', padding: '11px', borderRadius: '10px', border: 'none',
+                    width: '100%', padding: '11px',
+                    borderRadius: '10px',
+                    border: `2px solid ${preview.kind === 'csv' ? 'var(--green)' : 'var(--purple)'}`,
                     background: preview.kind === 'csv' ? 'var(--green)' : 'var(--purple)',
-                    color: '#fff', fontWeight: 600, fontFamily: 'DM Sans, sans-serif',
+                    color: '#fff', fontWeight: 700,
+                    fontFamily: "'Kalam', 'Itim', cursive",
                     fontSize: '0.9rem', cursor: 'pointer',
+                    boxShadow: 'var(--shadow)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '7px',
                   }}
                 >
@@ -454,7 +463,7 @@ export default function Export() {
         </div>
       )}
 
-      {/* Print area — rendered as portal directly into <body> so CSS body > #print-area works */}
+      {/* Print area — rendered as portal directly into <body> */}
       {createPortal(
         <div id="print-area">
           {printData && <PDFReport data={printData} categories={categories} print />}
@@ -474,17 +483,29 @@ function ExportCard({
 }) {
   return (
     <div style={{
-      background: 'var(--bg2)', borderRadius: '14px', padding: '18px',
-      border: '1px solid var(--border)', marginBottom: '14px',
+      background: 'var(--bg2)',
+      borderRadius: '14px',
+      padding: '18px',
+      border: '1px solid var(--border)',
+      boxShadow: 'var(--shadow)',
+      marginBottom: '14px',
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
         <div style={{ color: 'var(--text2)' }}>{icon}</div>
         <div>
-          <p style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--text)' }}>{title}</p>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text2)' }}>{description}</p>
+          <p style={{ fontFamily: "'Caveat', cursive", fontWeight: 700, fontSize: '1.1rem', color: 'var(--text)' }}>{title}</p>
+          <p style={{ fontSize: '0.75rem', color: 'var(--text2)', fontFamily: "'Kalam', 'Itim', cursive" }}>{description}</p>
         </div>
       </div>
-      <p style={{ fontSize: '0.68rem', color: 'var(--text2)', fontFamily: 'DM Mono, monospace', marginBottom: '12px', background: 'var(--bg3)', padding: '6px 10px', borderRadius: '6px' }}>
+      <p style={{
+        fontSize: '0.68rem', color: 'var(--text2)',
+        fontFamily: "'Caveat', cursive",
+        marginBottom: '12px',
+        background: 'var(--bg3)',
+        border: '1px solid var(--border)',
+        padding: '6px 10px',
+        borderRadius: '8px',
+      }}>
         {columns}
       </p>
       {children}
@@ -502,11 +523,13 @@ function ActionButton({
       onClick={onClick}
       disabled={loading}
       style={{
-        width: '100%', padding: '10px', borderRadius: '10px', border: 'none',
-        background: color, color: '#fff', fontWeight: 600,
-        fontFamily: 'DM Sans, sans-serif', fontSize: '0.88rem',
+        width: '100%', padding: '10px',
+        borderRadius: '10px',
+        border: `2px solid ${color}`,
+        background: color, color: '#fff', fontWeight: 700,
+        fontFamily: "'Kalam', 'Itim', cursive", fontSize: '0.88rem',
         cursor: loading ? 'wait' : 'pointer', opacity: loading ? 0.7 : 1,
-      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
       }}
     >
       {loading ? 'กำลังโหลด...' : children}
@@ -537,7 +560,7 @@ function PDFReport({
 
       {/* ── HEADER BAR ─────────────────────────────────────── */}
       <div style={{
-        background: '#e85d24',
+        background: '#3d9b8a',
         padding: '22px 28px 20px',
         display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end',
       }}>
@@ -696,13 +719,15 @@ function PDFReport({
 const selectStyle: React.CSSProperties = {
   width: '100%', padding: '8px 10px', borderRadius: '8px',
   border: '1px solid var(--border)', background: 'var(--bg3)',
-  color: 'var(--text)', fontFamily: 'DM Sans, sans-serif', fontSize: '0.85rem',
+  color: 'var(--text)', fontFamily: "'Kalam', 'Itim', cursive", fontSize: '0.85rem',
   outline: 'none', cursor: 'pointer',
 }
 
 const ghostBtn: React.CSSProperties = {
-  padding: '10px', borderRadius: '10px', border: '1px solid var(--border)',
-  background: 'var(--bg3)', color: 'var(--text2)', fontWeight: 600,
-  fontFamily: 'DM Sans, sans-serif', fontSize: '0.88rem', cursor: 'pointer',
+  padding: '10px',
+  borderRadius: '10px',
+  border: '1px solid var(--border)',
+  background: 'var(--bg3)', color: 'var(--text2)', fontWeight: 700,
+  fontFamily: "'Kalam', 'Itim', cursive", fontSize: '0.88rem', cursor: 'pointer',
   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
 }

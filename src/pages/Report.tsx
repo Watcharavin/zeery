@@ -89,10 +89,8 @@ export default function Report() {
     .filter(x => x.cat)
     .sort((a, b) => b.amount - a.amount)
 
-
   // Compare with previous period (simple: compare totals)
   const prevData = (() => {
-    // Just compute from txs that fall before `since`
     return { income: 0, expense: 0 }
   })()
 
@@ -102,25 +100,45 @@ export default function Report() {
   const periodLabel = period === 'week' ? '7 วัน' : period === 'month' ? '6 เดือน' : '12 เดือน'
 
   return (
-    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '16px 16px 80px' }}>
-      <h1 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text)', marginBottom: '4px' }}>รายงาน</h1>
-      <p style={{ fontSize: '0.8rem', color: 'var(--text2)', marginBottom: '16px' }}>สรุปรายรับ-รายจ่าย</p>
+    <div style={{ maxWidth: '760px', margin: '0 auto', padding: '16px' }}>
+      <h1 style={{
+        fontFamily: "'Caveat', cursive",
+        fontSize: '1.8rem',
+        fontWeight: 700,
+        color: 'var(--text)',
+        marginBottom: '2px',
+      }}>
+        รายงาน 📊
+      </h1>
+      <p style={{ fontSize: '0.85rem', color: 'var(--text2)', marginBottom: '16px', fontFamily: "'Kalam', 'Itim', cursive" }}>
+        สรุปรายรับ-รายจ่าย
+      </p>
 
       {/* Period toggle */}
       <div style={{
-        display: 'flex', background: 'var(--bg2)', borderRadius: '10px',
-        padding: '4px', gap: '4px', marginBottom: '24px',
+        display: 'flex',
+        background: 'var(--bg2)',
+        borderRadius: '14px',
+        padding: '4px',
+        gap: '4px',
+        marginBottom: '24px',
         border: '1px solid var(--border)',
+        boxShadow: 'var(--shadow-sm)',
       }}>
         {([['week', '7 วัน'], ['month', '6 เดือน'], ['year', '12 เดือน']] as const).map(([p, l]) => (
           <button
             key={p}
             onClick={() => setPeriod(p)}
             style={{
-              flex: 1, padding: '8px', borderRadius: '7px', cursor: 'pointer', border: 'none',
+              flex: 1, padding: '8px',
+              borderRadius: period === p ? '10px' : '8px',
+              cursor: 'pointer',
+              border: period === p ? '1px solid var(--accent)' : '1px solid transparent',
               background: period === p ? 'var(--accent)' : 'transparent',
               color: period === p ? '#fff' : 'var(--text2)',
-              fontFamily: 'DM Sans, sans-serif', fontWeight: 600, fontSize: '0.82rem',
+              fontFamily: "'Kalam', 'Itim', cursive",
+              fontWeight: 700,
+              fontSize: '0.85rem',
               transition: 'all 0.15s',
             }}
           >
@@ -137,11 +155,15 @@ export default function Report() {
           { label: 'ออม', value: totalSavings, color: 'var(--purple)', delta: null },
         ].map(card => (
           <div key={card.label} style={{
-            flex: 1, background: 'var(--bg2)', borderRadius: '12px', padding: '12px',
+            flex: 1,
+            background: 'var(--bg2)',
+            borderRadius: '14px',
+            padding: '12px',
             border: '1px solid var(--border)',
+            boxShadow: 'var(--shadow-sm)',
           }}>
-            <p style={{ fontSize: '0.7rem', color: 'var(--text2)', marginBottom: '4px' }}>{card.label}</p>
-            <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.95rem', fontWeight: 700, color: card.color }}>
+            <p style={{ fontSize: '0.7rem', color: 'var(--text2)', marginBottom: '4px', fontFamily: "'Kalam', 'Itim', cursive" }}>{card.label}</p>
+            <p style={{ fontFamily: "'Caveat', cursive", fontSize: '1.1rem', fontWeight: 700, color: card.color }}>
               ฿{fmt(card.value)}
             </p>
           </div>
@@ -150,17 +172,25 @@ export default function Report() {
 
       {/* Line chart */}
       <div style={{
-        background: 'var(--bg2)', borderRadius: '14px', padding: '16px',
-        border: '1px solid var(--border)', marginBottom: '24px',
+        background: 'var(--bg2)',
+        borderRadius: '14px',
+        padding: '16px',
+        border: '1px solid var(--border)',
+        boxShadow: 'var(--shadow)',
+        marginBottom: '24px',
       }}>
-        <p style={{ fontSize: '0.75rem', color: 'var(--text2)', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+        <p style={{
+          fontSize: '0.75rem', color: 'var(--text2)', marginBottom: '12px',
+          textTransform: 'uppercase', letterSpacing: '0.06em',
+          fontFamily: "'Kalam', 'Itim', cursive",
+        }}>
           แนวโน้ม {periodLabel}
         </p>
         <ResponsiveContainer width="100%" height={200}>
           <LineChart data={chartData} margin={{ top: 4, right: 4, bottom: 0, left: -20 }}>
             <XAxis
               dataKey="label"
-              tick={{ fontSize: 10, fill: 'var(--text2)' }}
+              tick={{ fontSize: 10, fill: 'var(--text2)', fontFamily: "'Kalam', 'Itim', cursive" }}
               axisLine={false} tickLine={false}
             />
             <YAxis
@@ -171,12 +201,16 @@ export default function Report() {
             <Tooltip
               formatter={(v) => [`฿${fmt(Number(v))}`, '']}
               contentStyle={{
-                background: 'var(--bg3)', border: '1px solid var(--border)',
-                borderRadius: '8px', fontSize: '0.78rem', color: 'var(--text)',
+                background: 'var(--bg3)',
+                border: '1px solid var(--border)',
+                borderRadius: '10px',
+                fontSize: '0.78rem',
+                color: 'var(--text)',
+                fontFamily: "'Kalam', 'Itim', cursive",
               }}
             />
             <Legend
-              wrapperStyle={{ fontSize: '0.72rem', color: 'var(--text2)', paddingTop: '8px' }}
+              wrapperStyle={{ fontSize: '0.72rem', color: 'var(--text2)', paddingTop: '8px', fontFamily: "'Kalam', 'Itim', cursive" }}
               formatter={v => ({ income: 'รายรับ', expense: 'รายจ่าย', savings: 'ออม' }[v as string] ?? v)}
             />
             <Line type="monotone" dataKey="income" stroke="var(--green)" strokeWidth={2} dot={false} />
@@ -189,10 +223,17 @@ export default function Report() {
       {/* Category breakdown */}
       {catList.length > 0 && (
         <div style={{
-          background: 'var(--bg2)', borderRadius: '14px', padding: '16px',
+          background: 'var(--bg2)',
+          borderRadius: '14px',
+          padding: '16px',
           border: '1px solid var(--border)',
+          boxShadow: 'var(--shadow)',
         }}>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text2)', marginBottom: '14px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+          <p style={{
+            fontSize: '0.75rem', color: 'var(--text2)', marginBottom: '14px',
+            textTransform: 'uppercase', letterSpacing: '0.06em',
+            fontFamily: "'Kalam', 'Itim', cursive",
+          }}>
             รายจ่ายแยกหมวด
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -202,15 +243,15 @@ export default function Report() {
                 <div key={id}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                     <div style={{ width: 10, height: 10, borderRadius: '50%', background: cat!.color, flexShrink: 0 }} />
-                    <span style={{ flex: 1, fontSize: '0.82rem', color: 'var(--text)', fontWeight: 500 }}>{cat!.label}</span>
-                    <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.82rem', color: 'var(--text2)' }}>
+                    <span style={{ flex: 1, fontSize: '0.85rem', color: 'var(--text)', fontWeight: 700, fontFamily: "'Kalam', 'Itim', cursive" }}>{cat!.label}</span>
+                    <span style={{ fontFamily: "'Caveat', cursive", fontSize: '0.85rem', color: 'var(--text2)' }}>
                       {(pct * 100).toFixed(1)}%
                     </span>
-                    <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.85rem', fontWeight: 600, color: 'var(--red)' }}>
+                    <span style={{ fontFamily: "'Caveat', cursive", fontSize: '0.9rem', fontWeight: 700, color: 'var(--red)' }}>
                       ฿{fmt(amount)}
                     </span>
                   </div>
-                  <div style={{ height: '5px', background: 'var(--bg3)', borderRadius: '99px', overflow: 'hidden' }}>
+                  <div style={{ height: '6px', background: 'var(--bg3)', borderRadius: '99px', overflow: 'hidden', border: '1px solid var(--border)' }}>
                     <div style={{
                       height: '100%', width: `${pct * 100}%`,
                       background: cat!.color, borderRadius: '99px', transition: 'width 0.4s',
@@ -224,9 +265,11 @@ export default function Report() {
           {/* Net summary */}
           <div style={{ marginTop: '16px', paddingTop: '14px', borderTop: '1px solid var(--border)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '0.82rem', color: 'var(--text2)' }}>รายรับ − รายจ่าย</span>
+              <span style={{ fontSize: '0.85rem', color: 'var(--text2)', fontFamily: "'Kalam', 'Itim', cursive" }}>รายรับ − รายจ่าย</span>
               <span style={{
-                fontFamily: 'DM Mono, monospace', fontSize: '0.9rem', fontWeight: 700,
+                fontFamily: "'Caveat', cursive",
+                fontSize: '1.1rem',
+                fontWeight: 700,
                 color: totalIncome - totalExpense >= 0 ? 'var(--green)' : 'var(--red)',
               }}>
                 {totalIncome - totalExpense >= 0 ? '+' : ''}฿{fmt(totalIncome - totalExpense)}
@@ -242,7 +285,7 @@ export default function Report() {
           color: 'var(--text2)', fontSize: '0.85rem',
         }}>
           <p style={{ fontSize: '2rem', marginBottom: '8px' }}>📊</p>
-          <p>ยังไม่มีข้อมูลในช่วงนี้</p>
+          <p style={{ fontFamily: "'Kalam', 'Itim', cursive" }}>ยังไม่มีข้อมูลในช่วงนี้</p>
         </div>
       )}
     </div>

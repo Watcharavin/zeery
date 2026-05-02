@@ -1,9 +1,12 @@
+import { Menu } from 'lucide-react'
+
 interface TopBarProps {
   period: 'weekly' | 'monthly'
   onPeriodChange: (p: 'weekly' | 'monthly') => void
+  onMenuToggle: () => void
 }
 
-export default function TopBar({ period, onPeriodChange }: TopBarProps) {
+export default function TopBar({ period, onPeriodChange, onMenuToggle }: TopBarProps) {
   const now = new Date()
   const monthLabel = now.toLocaleDateString('th-TH', { month: 'long', year: 'numeric' })
 
@@ -11,7 +14,7 @@ export default function TopBar({ period, onPeriodChange }: TopBarProps) {
     <header
       style={{
         background: 'var(--bg2)',
-        borderBottom: '3px solid var(--border)',
+        borderBottom: '1px solid var(--border)',
         padding: '0 1rem',
         height: '56px',
         display: 'flex',
@@ -19,12 +22,30 @@ export default function TopBar({ period, onPeriodChange }: TopBarProps) {
         justifyContent: 'space-between',
         position: 'sticky',
         top: 0,
-        zIndex: 40,
-        boxShadow: '0 3px 0 var(--border)',
+        zIndex: 210,
+        boxShadow: '0 1px 8px rgba(0,0,0,0.06)',
       }}
     >
-      {/* Logo */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        {/* Hamburger — mobile only */}
+        <button
+          onClick={onMenuToggle}
+          className="md:hidden"
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            color: 'var(--text2)',
+            display: 'flex',
+            alignItems: 'center',
+            padding: '4px',
+            marginRight: '4px',
+          }}
+        >
+          <Menu size={22} strokeWidth={2} />
+        </button>
+
+        {/* Logo */}
         <span style={{
           fontFamily: "'Caveat', cursive",
           fontWeight: 700,
@@ -48,8 +69,8 @@ export default function TopBar({ period, onPeriodChange }: TopBarProps) {
         style={{
           display: 'flex',
           background: 'var(--bg3)',
-          border: '2px solid var(--border)',
-          borderRadius: '255px 15px 225px 15px / 15px 225px 15px 255px',
+          border: '1px solid var(--border)',
+          borderRadius: '10px',
           padding: '3px',
           gap: '2px',
           boxShadow: 'var(--shadow-sm)',
@@ -61,8 +82,8 @@ export default function TopBar({ period, onPeriodChange }: TopBarProps) {
             onClick={() => onPeriodChange(p)}
             style={{
               padding: '4px 14px',
-              borderRadius: '255px 15px 225px 15px / 15px 225px 15px 255px',
-              border: period === p ? '2px solid var(--border)' : '2px solid transparent',
+              borderRadius: '10px',
+              border: period === p ? '1px solid var(--border)' : '1px solid transparent',
               cursor: 'pointer',
               fontSize: '0.8rem',
               fontWeight: 700,

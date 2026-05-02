@@ -1,3 +1,5 @@
+import rough from 'roughjs'
+
 export type DotChartOpts = {
   canvas: HTMLCanvasElement
   type: 'bar' | 'fill' | 'ring'
@@ -20,26 +22,6 @@ function hexToRgb(hex: string): [number, number, number] {
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255]
 }
 
-// Polyfill for roundRect (Safari < 15.4)
-function pillRect(
-  ctx: CanvasRenderingContext2D,
-  x: number, y: number, bw: number, bh: number,
-  r: number,
-) {
-  r = Math.min(r, bw / 2, bh / 2)
-  ctx.beginPath()
-  ctx.moveTo(x + r, y)
-  ctx.lineTo(x + bw - r, y)
-  ctx.arcTo(x + bw, y, x + bw, y + r, r)
-  ctx.lineTo(x + bw, y + bh - r)
-  ctx.arcTo(x + bw, y + bh, x + bw - r, y + bh, r)
-  ctx.lineTo(x + r, y + bh)
-  ctx.arcTo(x, y + bh, x, y + bh - r, r)
-  ctx.lineTo(x, y + r)
-  ctx.arcTo(x, y, x + r, y, r)
-  ctx.closePath()
-}
-
 export function drawDotChart(opts: DotChartOpts): void {
   const {
     canvas,
@@ -48,7 +30,7 @@ export function drawDotChart(opts: DotChartOpts): void {
     pct = 0,
     cols = 28,
     rows = 7,
-    accent = '#e85d24',
+    accent = '#3d9b8a',
     dimColor,
   } = opts
 
@@ -63,11 +45,10 @@ export function drawDotChart(opts: DotChartOpts): void {
   ctx.scale(dpr, dpr)
   ctx.clearRect(0, 0, w, h)
 
-  // Parse accent color — support CSS variables by falling back to orange
+  // Parse accent color — support CSS variables by falling back to teal
   let accentHex = accent
   if (accent.startsWith('var(')) {
-    accentHex = '#e85d24'
-    // Try to read from computed style if possible
+    accentHex = '#3d9b8a'
     try {
       const v = getComputedStyle(document.documentElement).getPropertyValue(
         accent.replace('var(', '').replace(')', '').trim()
@@ -82,6 +63,10 @@ export function drawDotChart(opts: DotChartOpts): void {
   const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches ||
     document.documentElement.dataset.theme === 'dark'
   const dim = dimColor ?? (isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.055)')
+  const borderDim = isDark ? 'rgba(255,255,255,0.12)' : '#c8c0b4'
+
+  // roughjs canvas — inherits the ctx.scale(dpr,dpr) transform already applied
+  const rc = rough.canvas(canvas)
 
   // ── BAR CHART ──────────────────────────────────────────────────────────────
   if (type === 'bar') {
@@ -90,17 +75,21 @@ export function drawDotChart(opts: DotChartOpts): void {
     const barW = Math.max(2.5, cellW * 0.48)
     const maxBarH = h - 2
     const baseY = h
-    const cornerR = barW / 2
 
-    // 1. Draw all background pill bars
+    // 1. Draw all background bars (rough rectangles)
     for (let col = 0; col < cols; col++) {
       const x = col * cellW + (cellW - barW) / 2
-      pillRect(ctx, x, baseY - maxBarH, barW, maxBarH, cornerR)
-      ctx.fillStyle = dim
-      ctx.fill()
+      rc.rectangle(x, baseY - maxBarH, barW, maxBarH, {
+        fill: dim,
+        fillStyle: 'solid',
+        stroke: borderDim,
+        strokeWidth: 1,
+        roughness: 1.3,
+        bowing: 1.2,
+      })
     }
 
-    // 2. Draw filled bars with gradient + glow cap
+    // 2. Draw filled bars (rough rectangles, no gradient — solid accent)
     for (let col = 0; col < cols; col++) {
       const intensity = Math.min(1, Math.max(0, colData[col] ?? 0))
       if (intensity < 0.02) continue
@@ -109,30 +98,29 @@ export function drawDotChart(opts: DotChartOpts): void {
       const x = col * cellW + (cellW - barW) / 2
       const y = baseY - barH
 
-      // Gradient: dim at base, full color at top
-      const grad = ctx.createLinearGradient(0, baseY, 0, y)
-      grad.addColorStop(0, accentFn(0.15))
-      grad.addColorStop(0.45, accentFn(0.55))
-      grad.addColorStop(1, accentFn(1.0))
+      rc.rectangle(x, y, barW, barH, {
+        fill: accentFn(0.75),
+        fillStyle: 'solid',
+        stroke: accentHex,
+        strokeWidth: 1.2,
+        roughness: 0.9,
+        bowing: 1,
+      })
 
-      pillRect(ctx, x, y, barW, barH, cornerR)
-      ctx.fillStyle = grad
-      ctx.fill()
-
-      // Glowing cap dot at the top of each bar
+      // Hand-drawn glow cap dot at the top
       if (intensity > 0.08) {
         const capR = Math.min(barW * 0.72, 5)
         const capX = x + barW / 2
         const capY = y + capR
 
-        ctx.save()
-        ctx.shadowBlur = 10
-        ctx.shadowColor = accentFn(0.75)
-        ctx.beginPath()
-        ctx.arc(capX, capY, capR, 0, Math.PI * 2)
-        ctx.fillStyle = accentFn(1.0)
-        ctx.fill()
-        ctx.restore()
+        rc.circle(capX, capY, capR * 2, {
+          fill: accentFn(1.0),
+          fillStyle: 'solid',
+          stroke: accentFn(0.5),
+          strokeWidth: 1,
+          roughness: 0.6,
+          bowing: 0,
+        })
       }
     }
     return
@@ -153,11 +141,16 @@ export function drawDotChart(opts: DotChartOpts): void {
         const y = row * cellH + cellH / 2
         const isFilled = idx < filled
         const progress = isFilled ? idx / Math.max(filled - 1, 1) : 0
+        const dotD = (isFilled ? dr : dr * 0.8) * 2
 
-        ctx.beginPath()
-        ctx.arc(x, y, isFilled ? dr : dr * 0.8, 0, Math.PI * 2)
-        ctx.fillStyle = isFilled ? accentFn(0.45 + 0.55 * progress) : dim
-        ctx.fill()
+        rc.circle(x, y, dotD, {
+          fill: isFilled ? accentFn(0.45 + 0.55 * progress) : dim,
+          fillStyle: 'solid',
+          stroke: isFilled ? accentFn(0.35) : borderDim,
+          strokeWidth: 0.8,
+          roughness: 0.75,
+          bowing: 0.5,
+        })
         idx++
       }
     }
@@ -181,21 +174,16 @@ export function drawDotChart(opts: DotChartOpts): void {
       const isFilled = i < filledCount
       const progress = isFilled ? i / Math.max(filledCount - 1, 1) : 0
       const isLastFew = isFilled && i >= filledCount - 2 && filledCount > 2
+      const dotD = (isFilled ? dotR : dotR * 0.7) * 2
 
-      ctx.beginPath()
-      ctx.arc(x, y, isFilled ? dotR : dotR * 0.7, 0, Math.PI * 2)
-
-      if (isLastFew) {
-        ctx.save()
-        ctx.shadowBlur = 8
-        ctx.shadowColor = accentFn(0.9)
-        ctx.fillStyle = accentFn(1.0)
-        ctx.fill()
-        ctx.restore()
-      } else {
-        ctx.fillStyle = isFilled ? accentFn(0.35 + 0.65 * progress) : dim
-        ctx.fill()
-      }
+      rc.circle(x, y, dotD, {
+        fill: isLastFew ? accentFn(1.0) : (isFilled ? accentFn(0.35 + 0.65 * progress) : dim),
+        fillStyle: 'solid',
+        stroke: isLastFew ? accentFn(0.8) : (isFilled ? accentFn(0.3) : borderDim),
+        strokeWidth: isLastFew ? 1.2 : 0.8,
+        roughness: isLastFew ? 0.9 : 0.75,
+        bowing: 0.5,
+      })
     }
   }
 }

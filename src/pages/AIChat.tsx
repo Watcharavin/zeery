@@ -253,10 +253,9 @@ ${recurringLines || '  (ยังไม่มีรายการประจ�
   const isEmpty = messages.length === 0
 
   return (
-    <div style={{
+    <div className="ai-chat-container" style={{
       display: 'flex',
       flexDirection: 'column',
-      height: 'calc(100svh - 56px - 72px)',
       overflow: 'hidden',
     }}>
       {/* header */}
@@ -268,40 +267,45 @@ ${recurringLines || '  (ยังไม่มีรายการประจ�
         justifyContent: 'space-between',
         flexShrink: 0,
         background: 'var(--bg2)',
+        boxShadow: 'var(--shadow-sm)',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div style={{
-            width: 32, height: 32,
-            borderRadius: '50%',
-            background: 'var(--accent)',
+            width: 36, height: 36,
+            border: '1px solid var(--border)',
+            borderRadius: '10px',
+            background: 'var(--accent-fill)',
+            boxShadow: 'var(--shadow-sm)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
-            <Sparkles size={16} color="#fff" />
+            <Sparkles size={16} color="var(--accent)" strokeWidth={2.5} />
           </div>
           <div>
-            <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text)', lineHeight: 1.2 }}>
-              Zeery AI
+            <div style={{ fontFamily: "'Caveat', cursive", fontWeight: 700, fontSize: '1.2rem', color: 'var(--text)', lineHeight: 1.1 }}>
+              Zeery AI ✨
             </div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text2)' }}>ผู้ช่วยวางแผนการเงิน</div>
+            <div style={{ fontSize: '0.72rem', color: 'var(--text2)', fontFamily: "'Kalam', 'Itim', cursive" }}>ผู้ช่วยวางแผนการเงิน</div>
           </div>
         </div>
         {!isEmpty && (
           <button
             onClick={handleClear}
             style={{
-              background: 'none',
-              border: 'none',
+              background: 'var(--bg3)',
+              border: '1px solid var(--border)',
+              borderRadius: '10px',
               cursor: 'pointer',
               color: 'var(--text2)',
-              padding: '6px',
-              borderRadius: '8px',
+              padding: '5px 12px',
               display: 'flex',
               alignItems: 'center',
-              gap: '4px',
+              gap: '5px',
               fontSize: '0.78rem',
+              fontFamily: "'Kalam', 'Itim', cursive",
+              boxShadow: 'var(--shadow-sm)',
             }}
           >
-            <RotateCcw size={14} />
+            <RotateCcw size={13} strokeWidth={2.5} />
             ล้าง
           </button>
         )}
@@ -326,15 +330,16 @@ ${recurringLines || '  (ยังไม่มีรายการประจ�
         <div ref={bottomRef} />
       </div>
 
-      {/* suggestions row — shown after first message */}
+      {/* suggestions row */}
       {!isEmpty && !loading && (
         <div style={{
           display: 'flex',
           gap: '8px',
           overflowX: 'auto',
-          padding: '0 16px 8px',
+          padding: '8px 16px',
           flexShrink: 0,
           scrollbarWidth: 'none',
+          borderTop: '1px solid var(--border)',
         }}>
           {SUGGESTIONS.slice(0, 4).map(s => (
             <button
@@ -344,13 +349,23 @@ ${recurringLines || '  (ยังไม่มีรายการประจ�
                 flexShrink: 0,
                 background: 'var(--bg2)',
                 border: '1px solid var(--border)',
-                borderRadius: '20px',
-                padding: '6px 12px',
+                borderRadius: '10px',
+                padding: '5px 12px',
                 fontSize: '0.75rem',
                 color: 'var(--text2)',
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
-                fontFamily: 'DM Sans, sans-serif',
+                fontFamily: "'Kalam', 'Itim', cursive",
+                boxShadow: 'var(--shadow-sm)',
+                transition: 'transform 0.12s ease, box-shadow 0.12s ease',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.transform = 'translate(-1px, -2px)'
+                e.currentTarget.style.boxShadow = 'var(--shadow)'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.transform = ''
+                e.currentTarget.style.boxShadow = 'var(--shadow-sm)'
               }}
             >
               {s}
@@ -368,6 +383,7 @@ ${recurringLines || '  (ยังไม่มีรายการประจ�
         alignItems: 'flex-end',
         flexShrink: 0,
         background: 'var(--bg2)',
+        boxShadow: '0 -4px 16px rgba(0,0,0,0.06)',
       }}>
         <textarea
           ref={inputRef}
@@ -381,15 +397,16 @@ ${recurringLines || '  (ยังไม่มีรายการประจ�
             resize: 'none',
             background: 'var(--bg3)',
             border: '1px solid var(--border)',
-            borderRadius: '12px',
+            borderRadius: '14px',
             padding: '10px 14px',
             fontSize: '0.9rem',
-            fontFamily: 'DM Sans, sans-serif',
+            fontFamily: "'Kalam', 'Itim', cursive",
             color: 'var(--text)',
             outline: 'none',
-            lineHeight: '1.4',
+            lineHeight: '1.5',
             maxHeight: '120px',
             overflowY: 'auto',
+            boxShadow: 'inset 0 1px 4px rgba(0,0,0,0.06)',
           }}
           onInput={e => {
             const el = e.currentTarget
@@ -401,20 +418,21 @@ ${recurringLines || '  (ยังไม่มีรายการประจ�
           onClick={() => send(input)}
           disabled={!input.trim() || loading}
           style={{
-            width: 40, height: 40,
-            borderRadius: '50%',
+            width: 42, height: 42,
+            borderRadius: '10px',
             background: input.trim() && !loading ? 'var(--accent)' : 'var(--bg3)',
-            border: 'none',
+            border: '1px solid var(--border)',
             cursor: input.trim() && !loading ? 'pointer' : 'default',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             flexShrink: 0,
-            transition: 'background 0.15s',
-            color: input.trim() && !loading ? '#fff' : 'var(--text2)',
+            boxShadow: input.trim() && !loading ? 'var(--shadow-sm)' : 'none',
+            color: input.trim() && !loading ? '#fdfcf7' : 'var(--text2)',
+            transition: 'all 0.12s ease',
           }}
         >
-          <Send size={17} strokeWidth={2} />
+          <Send size={17} strokeWidth={2.5} />
         </button>
       </div>
     </div>
@@ -431,25 +449,27 @@ function EmptyState({ onSuggest }: { onSuggest: (t: string) => void }) {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: '20px',
+      gap: '24px',
       paddingBottom: '24px',
     }}>
       <div style={{ textAlign: 'center' }}>
         <div style={{
-          width: 56, height: 56,
-          borderRadius: '50%',
-          background: 'rgba(232,93,36,0.12)',
+          width: 64, height: 64,
+          border: '1px solid var(--border)',
+          borderRadius: '16px',
+          background: 'var(--accent-fill)',
+          boxShadow: 'var(--shadow)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          margin: '0 auto 12px',
+          margin: '0 auto 14px',
         }}>
-          <Sparkles size={26} color="var(--accent)" />
+          <Sparkles size={28} color="var(--accent)" strokeWidth={2.5} />
         </div>
-        <div style={{ fontWeight: 700, fontSize: '1.05rem', color: 'var(--text)', marginBottom: '6px' }}>
-          Zeery AI
+        <div style={{ fontFamily: "'Caveat', cursive", fontWeight: 700, fontSize: '1.5rem', color: 'var(--text)', marginBottom: '6px' }}>
+          Zeery AI ✨
         </div>
-        <div style={{ fontSize: '0.85rem', color: 'var(--text2)', lineHeight: 1.5 }}>
+        <div style={{ fontSize: '0.88rem', color: 'var(--text2)', lineHeight: 1.6, fontFamily: "'Kalam', 'Itim', cursive" }}>
           ถามได้ทุกอย่างเกี่ยวกับการเงินของคุณ<br />
           ฉันเห็นข้อมูลจริงของคุณและตอบแบบเฉพาะเจาะจง
         </div>
@@ -469,14 +489,24 @@ function EmptyState({ onSuggest }: { onSuggest: (t: string) => void }) {
             style={{
               background: 'var(--bg2)',
               border: '1px solid var(--border)',
-              borderRadius: '12px',
+              borderRadius: '10px',
               padding: '10px 12px',
-              fontSize: '0.78rem',
+              fontSize: '0.8rem',
               color: 'var(--text)',
               cursor: 'pointer',
               textAlign: 'left',
-              lineHeight: 1.4,
-              fontFamily: 'DM Sans, sans-serif',
+              lineHeight: 1.5,
+              fontFamily: "'Kalam', 'Itim', cursive",
+              boxShadow: 'var(--shadow-sm)',
+              transition: 'transform 0.12s ease, box-shadow 0.12s ease',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.transform = 'translate(-1px, -2px) rotate(-0.5deg)'
+              e.currentTarget.style.boxShadow = 'var(--shadow)'
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.transform = ''
+              e.currentTarget.style.boxShadow = 'var(--shadow-sm)'
             }}
           >
             {s}
@@ -499,30 +529,35 @@ function MessageBubble({ msg }: { msg: Message }) {
     }}>
       {!isUser && (
         <div style={{
-          width: 28, height: 28,
-          borderRadius: '50%',
-          background: 'var(--accent)',
+          width: 30, height: 30,
+          border: '1px solid var(--border)',
+          borderRadius: '10px',
+          background: 'var(--accent-fill)',
+          boxShadow: 'var(--shadow-sm)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           flexShrink: 0,
           marginBottom: '2px',
         }}>
-          <Sparkles size={13} color="#fff" />
+          <Sparkles size={13} color="var(--accent)" strokeWidth={2.5} />
         </div>
       )}
       <div style={{
         maxWidth: '78%',
         background: isUser ? 'var(--accent)' : 'var(--bg2)',
-        color: isUser ? '#fff' : 'var(--text)',
-        borderRadius: isUser ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
+        color: isUser ? '#fdfcf7' : 'var(--text)',
+        borderRadius: isUser
+          ? '18px 18px 4px 18px'
+          : '18px 18px 18px 4px',
         padding: '10px 14px',
-        fontSize: '0.88rem',
-        lineHeight: 1.55,
-        border: isUser ? 'none' : '1px solid var(--border)',
+        fontSize: '0.9rem',
+        lineHeight: 1.6,
+        border: '1px solid var(--border)',
+        boxShadow: 'var(--shadow-sm)',
         whiteSpace: 'pre-wrap',
         wordBreak: 'break-word',
-        fontFamily: 'DM Sans, sans-serif',
+        fontFamily: "'Kalam', 'Itim', cursive",
       }}>
         {msg.content || (msg.streaming ? <TypingDots /> : '')}
         {msg.streaming && msg.content && <BlinkCursor />}

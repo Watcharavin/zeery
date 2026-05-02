@@ -22,14 +22,14 @@ const linkStyle = (active: boolean): React.CSSProperties => ({
   alignItems: 'center',
   gap: '10px',
   padding: '8px 12px',
-  borderRadius: '255px 15px 225px 15px / 15px 225px 15px 255px',
+  borderRadius: '10px',
   textDecoration: 'none',
   fontSize: '0.88rem',
   fontWeight: active ? 700 : 400,
   fontFamily: "'Kalam', 'Itim', cursive",
   color: active ? 'var(--accent)' : 'var(--text2)',
   background: active ? 'var(--accent-fill)' : 'transparent',
-  border: active ? '2px solid var(--accent)' : '2px solid transparent',
+  border: active ? '1px solid var(--accent)' : '1px solid transparent',
   boxShadow: active ? 'var(--shadow-sm)' : 'none',
   transition: 'all 0.15s ease',
 })
@@ -43,23 +43,24 @@ function SideNavLink({ to, label, icon }: { to: string; label: string; icon: str
   )
 }
 
-export default function Sidebar() {
+export default function Sidebar({ drawer = false }: { drawer?: boolean }) {
   return (
     <aside
       style={{
-        width: '200px',
+        width: drawer ? '100%' : '200px',
         flexShrink: 0,
         background: 'var(--bg2)',
-        borderRight: '3px solid var(--border)',
-        boxShadow: '3px 0 0 var(--border)',
+        borderRight: drawer ? 'none' : '1px solid var(--border)',
         padding: '1rem 0.75rem',
         display: 'flex',
         flexDirection: 'column',
         gap: '0.25rem',
-        position: 'sticky',
-        top: '56px',
-        height: 'calc(100svh - 56px)',
-        overflowY: 'auto',
+        ...(drawer ? {} : {
+          position: 'sticky',
+          top: '56px',
+          height: 'calc(100svh - 56px)',
+          overflowY: 'auto',
+        }),
       }}
     >
       <div style={{ marginBottom: '0.5rem' }}>
@@ -78,7 +79,7 @@ export default function Sidebar() {
         {navMain.map(n => <SideNavLink key={n.to} {...n} />)}
       </div>
 
-      <div style={{ borderTop: '2px dashed var(--text2)', paddingTop: '0.75rem', opacity: 0.6 }}>
+      <div style={{ borderTop: '1px solid var(--border)', paddingTop: '0.75rem', marginTop: '0.25rem' }}>
         <p style={{
           fontFamily: "'Caveat', cursive",
           fontWeight: 700,

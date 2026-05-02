@@ -100,18 +100,18 @@ export default function Transactions() {
   }
 
   return (
-    <div style={{ maxWidth: '520px', margin: '0 auto', padding: '16px 16px 80px' }}>
+    <div style={{ maxWidth: '700px', margin: '0 auto', padding: '16px' }}>
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px', gap: '10px' }}>
-        <h1 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text)' }}>รายการ</h1>
+        <h1 style={{ fontFamily: "'Caveat', cursive", fontSize: '1.8rem', fontWeight: 700, color: 'var(--text)' }}>รายการ 📋</h1>
         {/* Month nav */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '2px', flex: 1, justifyContent: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flex: 1, justifyContent: 'center', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: '10px', padding: '2px 6px', boxShadow: 'var(--shadow-sm)' }}>
           <button
             onClick={() => setSelectedMonth(m => addMonths(m, -1))}
             style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text2)', padding: '4px', display: 'flex' }}
           >
-            <ChevronLeft size={16} strokeWidth={2} />
+            <ChevronLeft size={16} strokeWidth={2.5} />
           </button>
-          <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text)', minWidth: 110, textAlign: 'center' }}>
+          <span style={{ fontFamily: "'Kalam', 'Itim', cursive", fontWeight: 700, fontSize: '0.78rem', color: 'var(--text)', minWidth: 90, textAlign: 'center' }}>
             {fmtMonthLabel(selectedMonth)}
           </span>
           <button
@@ -123,16 +123,17 @@ export default function Transactions() {
               padding: '4px', display: 'flex',
             }}
           >
-            <ChevronRight size={16} strokeWidth={2} />
+            <ChevronRight size={16} strokeWidth={2.5} />
           </button>
         </div>
         <button
           onClick={() => navigate('/add')}
           style={{
-            padding: '7px 14px', borderRadius: '8px', border: 'none',
-            background: 'var(--accent)', color: '#fff', fontWeight: 600,
-            fontFamily: 'DM Sans, sans-serif', fontSize: '0.82rem', cursor: 'pointer',
-            display: 'flex', alignItems: 'center', gap: '5px',
+            padding: '7px 14px', borderRadius: '10px',
+            border: '1px solid var(--border)', background: 'var(--accent)', color: '#fdfcf7',
+            fontWeight: 700, fontFamily: "'Kalam', 'Itim', cursive", fontSize: '0.82rem',
+            cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px',
+            boxShadow: 'var(--shadow-sm)',
           }}
         >
           <Plus size={14} strokeWidth={2.5} /> เพิ่ม
@@ -144,12 +145,13 @@ export default function Transactions() {
         type="text"
         value={search}
         onChange={e => setSearch(e.target.value)}
-        placeholder="ค้นหารายการ..."
+        placeholder="🔍 ค้นหารายการ..."
         style={{
-          width: '100%', padding: '10px 12px', borderRadius: '10px',
+          width: '100%', padding: '10px 14px', borderRadius: '8px',
           border: '1px solid var(--border)', background: 'var(--bg2)',
-          color: 'var(--text)', fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem',
+          color: 'var(--text)', fontFamily: "'Kalam', 'Itim', cursive", fontSize: '0.95rem',
           outline: 'none', boxSizing: 'border-box', marginBottom: '10px',
+          boxShadow: 'var(--shadow-sm)',
         }}
       />
 
@@ -161,29 +163,31 @@ export default function Transactions() {
             key={v}
             onClick={() => setFilterType(v)}
             style={{
-              padding: '5px 12px', borderRadius: '20px', border: 'none', cursor: 'pointer',
+              padding: '5px 14px', borderRadius: '10px',
+              border: '1px solid var(--border)', cursor: 'pointer',
               background: filterType === v ? 'var(--accent)' : 'var(--bg2)',
-              color: filterType === v ? '#fff' : 'var(--text2)',
-              fontSize: '0.78rem', fontFamily: 'DM Sans, sans-serif', fontWeight: 500,
+              color: filterType === v ? '#fdfcf7' : 'var(--text2)',
+              fontSize: '0.78rem', fontFamily: "'Kalam', 'Itim', cursive", fontWeight: 700,
               whiteSpace: 'nowrap', flexShrink: 0,
+              boxShadow: filterType === v ? 'var(--shadow-sm)' : 'none',
             }}
           >
             {l}
           </button>
         ))}
 
-        <div style={{ width: '1px', background: 'var(--border)', flexShrink: 0 }} />
+        <div style={{ width: '2px', background: 'var(--border)', flexShrink: 0, borderRadius: '2px' }} />
 
         {/* Category filter */}
         <button
           onClick={() => setFilterCat('')}
           style={{
-            padding: '5px 10px', borderRadius: '20px', border: 'none', cursor: 'pointer',
+            padding: '5px 12px', borderRadius: '10px',
+            border: `1px solid ${filterCat === '' ? 'var(--border)' : 'transparent'}`, cursor: 'pointer',
             background: filterCat === '' ? 'var(--bg3)' : 'var(--bg2)',
             color: filterCat === '' ? 'var(--text)' : 'var(--text2)',
-            fontSize: '0.78rem', fontFamily: 'DM Sans, sans-serif',
+            fontSize: '0.78rem', fontFamily: "'Kalam', 'Itim', cursive", fontWeight: filterCat === '' ? 700 : 400,
             whiteSpace: 'nowrap', flexShrink: 0,
-            outline: filterCat === '' ? '1px solid var(--border)' : 'none',
           }}
         >
           ทุกหมวด
@@ -193,12 +197,12 @@ export default function Transactions() {
             key={cat.id}
             onClick={() => setFilterCat(filterCat === cat.id ? '' : cat.id)}
             style={{
-              padding: '5px 10px', borderRadius: '20px', border: 'none', cursor: 'pointer',
+              padding: '5px 12px', borderRadius: '10px',
+              border: `1px solid ${filterCat === cat.id ? cat.color + '88' : 'transparent'}`, cursor: 'pointer',
               background: filterCat === cat.id ? cat.color + '22' : 'var(--bg2)',
               color: filterCat === cat.id ? cat.color : 'var(--text2)',
-              fontSize: '0.78rem', fontFamily: 'DM Sans, sans-serif',
+              fontSize: '0.78rem', fontFamily: "'Kalam', 'Itim', cursive", fontWeight: filterCat === cat.id ? 700 : 400,
               whiteSpace: 'nowrap', flexShrink: 0,
-              outline: filterCat === cat.id ? `1px solid ${cat.color}55` : 'none',
             }}
           >
             {cat.label}
@@ -210,8 +214,8 @@ export default function Transactions() {
       {filtered.length > 0 && (
         <div style={{
           display: 'flex', gap: '10px', marginBottom: '16px',
-          background: 'var(--bg2)', borderRadius: '10px', padding: '10px 14px',
-          border: '1px solid var(--border)',
+          background: 'var(--bg2)', borderRadius: '14px', padding: '10px 14px',
+          border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)',
         }}>
           {[
             { label: 'รายการ', value: filtered.length.toString(), color: 'var(--text)' },
@@ -227,8 +231,8 @@ export default function Transactions() {
             },
           ].map(s => (
             <div key={s.label} style={{ flex: 1, textAlign: 'center' }}>
-              <p style={{ fontSize: '0.65rem', color: 'var(--text2)', marginBottom: '2px' }}>{s.label}</p>
-              <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.82rem', fontWeight: 600, color: s.color }}>{s.value}</p>
+              <p style={{ fontSize: '0.65rem', color: 'var(--text2)', marginBottom: '2px', fontFamily: "'Kalam', 'Itim', cursive" }}>{s.label}</p>
+              <p style={{ fontFamily: "'Caveat', cursive", fontSize: '1rem', fontWeight: 700, color: s.color }}>{s.value}</p>
             </div>
           ))}
         </div>
@@ -237,17 +241,19 @@ export default function Transactions() {
       {/* Groups */}
       {groups.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '48px 16px', color: 'var(--text2)' }}>
-          <ClipboardList size={32} strokeWidth={1.5} style={{ marginBottom: '8px', opacity: 0.4 }} />
-          <p style={{ fontSize: '0.85rem' }}>
+          <ClipboardList size={40} strokeWidth={1.5} style={{ marginBottom: '12px', opacity: 0.3 }} />
+          <p style={{ fontFamily: "'Kalam', 'Itim', cursive", fontSize: '0.95rem', color: 'var(--text2)' }}>
             {filtered.length === 0 && transactions.length > 0 ? 'ไม่พบรายการที่ตรงกัน' : `ไม่มีรายการใน${fmtMonthLabel(selectedMonth)}`}
           </p>
           {selectedMonth === currentYearMonth() && transactions.length === 0 && (
             <button
               onClick={() => navigate('/add')}
               style={{
-                marginTop: '12px', padding: '8px 20px', borderRadius: '8px', border: 'none',
-                background: 'var(--accent)', color: '#fff', fontWeight: 600,
-                fontFamily: 'DM Sans, sans-serif', fontSize: '0.85rem', cursor: 'pointer',
+                marginTop: '12px', padding: '10px 24px',
+                borderRadius: '10px',
+                border: '1px solid var(--border)', background: 'var(--accent)', color: '#fdfcf7',
+                fontWeight: 700, fontFamily: "'Kalam', 'Itim', cursive", fontSize: '0.88rem',
+                cursor: 'pointer', boxShadow: 'var(--shadow-sm)',
               }}
             >
               + เพิ่มรายการแรก
@@ -263,10 +269,10 @@ export default function Transactions() {
               <div key={date}>
                 {/* Date header */}
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', gap: '8px' }}>
-                  <span style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--text2)' }}>{formatDate(date)}</span>
-                  <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
-                  {dayIncome > 0 && <span style={{ fontSize: '0.72rem', color: 'var(--green)', fontFamily: 'DM Mono, monospace' }}>+{fmt(dayIncome)}</span>}
-                  {dayExpense > 0 && <span style={{ fontSize: '0.72rem', color: 'var(--red)', fontFamily: 'DM Mono, monospace' }}>-{fmt(dayExpense)}</span>}
+                  <span style={{ fontFamily: "'Kalam', 'Itim', cursive", fontWeight: 700, fontSize: '0.78rem', color: 'var(--text2)' }}>{formatDate(date)}</span>
+                  <div style={{ flex: 1, height: '2px', background: 'var(--border)', borderRadius: '2px' }} />
+                  {dayIncome > 0 && <span style={{ fontFamily: "'Caveat', cursive", fontWeight: 700, fontSize: '0.85rem', color: 'var(--green)' }}>+{fmt(dayIncome)}</span>}
+                  {dayExpense > 0 && <span style={{ fontFamily: "'Caveat', cursive", fontWeight: 700, fontSize: '0.85rem', color: 'var(--red)' }}>-{fmt(dayExpense)}</span>}
                 </div>
 
                 {/* Transactions */}
@@ -278,48 +284,50 @@ export default function Transactions() {
                       <div
                         key={tx.id}
                         style={{
-                          background: 'var(--bg2)', borderRadius: '12px', padding: '12px 14px',
-                          border: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: '10px',
+                          background: 'var(--bg2)', borderRadius: '14px', padding: '12px 14px',
+                          border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)',
+                          display: 'flex', alignItems: 'center', gap: '10px',
                           opacity: deleting === tx.id ? 0.4 : 1, transition: 'opacity 0.2s',
                         }}
                       >
                         {/* Category icon */}
                         <div style={{
-                          width: 36, height: 36, borderRadius: 10, flexShrink: 0,
-                          background: cat.color + '20',
+                          width: 36, height: 36, borderRadius: '8px', flexShrink: 0,
+                          background: cat.color + '22', border: '1px solid var(--border)',
                           display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          boxShadow: 'var(--shadow-sm)',
                         }}>
-                          {(() => { const Icon = CAT_ICONS[cat.id] ?? Tag; return <Icon size={17} color={cat.color} strokeWidth={1.8} /> })()}
+                          {(() => { const Icon = CAT_ICONS[cat.id] ?? Tag; return <Icon size={17} color={cat.color} strokeWidth={2} /> })()}
                         </div>
                         <div style={{ flex: 1, minWidth: 0 }}>
-                          <p style={{ fontWeight: 500, fontSize: '0.88rem', color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          <p style={{ fontFamily: "'Kalam', 'Itim', cursive", fontWeight: 700, fontSize: '0.9rem', color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                             {tx.name}
                           </p>
                           <div style={{ display: 'flex', gap: '5px', alignItems: 'center', marginTop: '3px', flexWrap: 'wrap' }}>
-                            {/* Category tag */}
                             <span style={{
                               display: 'inline-flex', alignItems: 'center',
                               background: cat.color + '18', color: cat.color,
-                              padding: '1px 7px', borderRadius: '20px',
-                              fontSize: '0.67rem', fontWeight: 600,
+                              padding: '1px 8px', borderRadius: '20px',
+                              fontSize: '0.67rem', fontWeight: 700,
+                              fontFamily: "'Kalam', 'Itim', cursive",
                             }}>
                               {cat.label}
                             </span>
-                            {tx.note && <span style={{ fontSize: '0.68rem', color: 'var(--text2)' }}>{tx.note}</span>}
+                            {tx.note && <span style={{ fontSize: '0.68rem', color: 'var(--text2)', fontFamily: "'Kalam', 'Itim', cursive" }}>{tx.note}</span>}
                             {tx.source === 'ocr' && (
-                              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', fontSize: '0.62rem', color: 'var(--accent)', background: 'rgba(232,93,36,0.1)', padding: '1px 6px', borderRadius: '4px' }}>
+                              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', fontSize: '0.62rem', color: 'var(--accent)', background: 'var(--accent-fill)', padding: '1px 6px', borderRadius: '4px', fontFamily: "'Kalam', 'Itim', cursive", fontWeight: 700 }}>
                                 <Camera size={9} strokeWidth={2} />OCR
                               </span>
                             )}
                             {tx.source === 'recurring' && (
-                              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', fontSize: '0.62rem', color: 'var(--purple)', background: 'rgba(124,58,237,0.1)', padding: '1px 6px', borderRadius: '4px' }}>
+                              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', fontSize: '0.62rem', color: 'var(--purple)', background: 'var(--purple-fill)', padding: '1px 6px', borderRadius: '4px', fontFamily: "'Kalam', 'Itim', cursive", fontWeight: 700 }}>
                                 <RotateCcw size={9} strokeWidth={2} />ประจำ
                               </span>
                             )}
                           </div>
                         </div>
                         <span style={{
-                          fontFamily: 'DM Mono, monospace', fontWeight: 700, fontSize: '0.95rem',
+                          fontFamily: "'Caveat', cursive", fontWeight: 700, fontSize: '1.1rem',
                           color: isIncome ? 'var(--green)' : 'var(--red)',
                         }}>
                           {isIncome ? '+' : '-'}฿{fmt(tx.amount)}

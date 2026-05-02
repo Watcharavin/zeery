@@ -88,27 +88,29 @@ function calcETA(goal: SavingsGoal): string {
 
 const card: React.CSSProperties = {
   background: 'var(--bg2)',
-  borderRadius: '12px',
+  borderRadius: '16px',
   border: '1px solid var(--border)',
-  padding: '16px',
+  boxShadow: 'var(--shadow)',
+  padding: '20px',
   overflow: 'hidden',
   display: 'flex',
   flexDirection: 'column',
-  gap: '8px',
+  gap: '10px',
 }
 
 const label: React.CSSProperties = {
-  fontSize: '0.7rem',
+  fontSize: '0.68rem',
   color: 'var(--text2)',
-  textTransform: 'uppercase',
-  letterSpacing: '0.06em',
-  fontWeight: 500,
+  fontFamily: "'Kalam', 'Itim', cursive",
+  fontWeight: 700,
+  textTransform: 'uppercase' as const,
+  letterSpacing: '0.09em',
 }
 
 const amount: React.CSSProperties = {
-  fontFamily: 'DM Mono, monospace',
-  fontSize: '1.5rem',
-  fontWeight: 500,
+  fontFamily: "'Caveat', cursive",
+  fontSize: '2rem',
+  fontWeight: 700,
   color: 'var(--text)',
   lineHeight: 1,
 }
@@ -161,10 +163,10 @@ export default function Dashboard() {
       style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: '12px',
-        padding: '16px',
+        gap: '16px',
+        padding: '20px',
       }}
-      className="dashboard-grid"
+      className="dashboard-grid page-content-wide"
     >
 
       {/* ── Net Balance Hero (4 col) ────────────────────────────── */}
@@ -173,44 +175,43 @@ export default function Dashboard() {
         gridColumn: 'span 4',
         flexDirection: 'row',
         alignItems: 'center',
-        background: balance >= 0
-          ? 'linear-gradient(135deg, rgba(22,163,74,0.08) 0%, var(--bg2) 70%)'
-          : 'linear-gradient(135deg, rgba(220,38,38,0.08) 0%, var(--bg2) 70%)',
-        padding: '20px 24px',
+        padding: '24px 28px',
         gap: '0',
+        borderLeft: `4px solid ${balance >= 0 ? 'var(--green)' : 'var(--red)'}`,
+        background: `linear-gradient(135deg, ${balance >= 0 ? 'rgba(45,155,135,0.07)' : 'rgba(217,82,82,0.07)'} 0%, transparent 55%)`,
       }}>
         <div style={{ flex: 1 }}>
-          <span style={{ ...label, marginBottom: '6px', display: 'block' }}>
+          <span style={{ ...label, marginBottom: '8px', display: 'block' }}>
             {period === 'monthly' ? 'คงเหลือเดือนนี้' : 'คงเหลือสัปดาห์นี้'}
           </span>
           <span style={{
-            fontFamily: 'DM Mono, monospace',
-            fontSize: '2.4rem',
-            fontWeight: 600,
+            fontFamily: "'Caveat', cursive",
+            fontSize: '3rem',
+            fontWeight: 700,
             color: balance >= 0 ? 'var(--green)' : 'var(--red)',
             lineHeight: 1,
-            letterSpacing: '-0.02em',
+            letterSpacing: '-0.01em',
           }}>
             {balance >= 0 ? '+' : '-'}฿{fmt(Math.abs(balance))}
           </span>
         </div>
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <div style={{ textAlign: 'center', padding: '10px 14px', background: 'rgba(22,163,74,0.08)', borderRadius: '10px' }}>
-            <p style={{ ...label, marginBottom: '4px' }}>รายรับ</p>
-            <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.95rem', fontWeight: 600, color: 'var(--green)' }}>฿{fmt(income)}</p>
+        <div style={{ display: 'flex', gap: '0', alignItems: 'stretch' }}>
+          <div style={{ textAlign: 'right', padding: '0 20px' }}>
+            <p style={{ ...label, marginBottom: '6px' }}>รายรับ</p>
+            <p style={{ fontFamily: "'Caveat', cursive", fontSize: '1.4rem', fontWeight: 700, color: 'var(--green)' }}>฿{fmt(income)}</p>
           </div>
-          <div style={{ textAlign: 'center', padding: '10px 14px', background: 'rgba(232,93,36,0.08)', borderRadius: '10px' }}>
-            <p style={{ ...label, marginBottom: '4px' }}>รายจ่าย</p>
-            <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.95rem', fontWeight: 600, color: 'var(--accent)' }}>฿{fmt(expense)}</p>
+          <div style={{ width: '1px', background: 'var(--border)', alignSelf: 'stretch' }} />
+          <div style={{ textAlign: 'right', padding: '0 0 0 20px' }}>
+            <p style={{ ...label, marginBottom: '6px' }}>รายจ่าย</p>
+            <p style={{ fontFamily: "'Caveat', cursive", fontSize: '1.4rem', fontWeight: 700, color: 'var(--red)' }}>฿{fmt(expense)}</p>
           </div>
-          {savingsPct > 0 && (
-            <div style={{ textAlign: 'center', padding: '10px 14px', background: 'var(--bg3)', borderRadius: '10px' }}>
-              <p style={{ ...label, marginBottom: '4px' }}>ออม%</p>
-              <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.95rem', fontWeight: 600, color: 'var(--purple)' }}>
-                {savingsPct}%
-              </p>
+          {savingsPct > 0 && <>
+            <div style={{ width: '1px', background: 'var(--border)', alignSelf: 'stretch', margin: '0 0 0 20px' }} />
+            <div style={{ textAlign: 'right', padding: '0 0 0 20px' }}>
+              <p style={{ ...label, marginBottom: '6px' }}>ออม</p>
+              <p style={{ fontFamily: "'Caveat', cursive", fontSize: '1.4rem', fontWeight: 700, color: 'var(--purple)' }}>{savingsPct}%</p>
             </div>
-          )}
+          </>}
         </div>
       </div>
 
@@ -220,12 +221,14 @@ export default function Dashboard() {
           <span style={label}>รายรับ</span>
           <span
             style={{
-              fontSize: '0.7rem',
-              fontWeight: 600,
+              fontSize: '0.72rem',
+              fontWeight: 700,
+              fontFamily: "'Kalam', 'Itim', cursive",
               padding: '2px 8px',
-              borderRadius: '99px',
-              background: incomeChg >= 0 ? 'rgba(22,163,74,0.12)' : 'rgba(220,38,38,0.12)',
+              borderRadius: '10px',
+              background: incomeChg >= 0 ? 'var(--green-fill)' : 'var(--red-fill)',
               color: incomeChg >= 0 ? 'var(--green)' : 'var(--red)',
+              border: `1.5px solid ${incomeChg >= 0 ? 'var(--green)' : 'var(--red)'}`,
             }}
           >
             {incomeChg >= 0 ? '+' : ''}{incomeChg.toFixed(1)}%
@@ -242,18 +245,18 @@ export default function Dashboard() {
         <span style={label}>รายจ่าย</span>
         <span style={{ ...amount, color: 'var(--accent)' }}>฿{fmt(expense)}</span>
         <div style={{ flex: 1, minHeight: 0 }}>
-          <DotChart type="bar" data={expenseBar} accent="#e85d24" height={52} />
+          <DotChart type="bar" data={expenseBar} accent="var(--red)" height={52} />
         </div>
       </div>
 
       {/* ── คงเหลือ (1 col) ────────────────────────────────────── */}
-      <div style={{ ...card, alignItems: 'center' }}>
+      <div style={{ ...card, alignItems: 'center', gap: '6px' }}>
         <span style={label}>คงเหลือ</span>
-        <div style={{ width: '90px', height: '90px' }}>
-          <DotChart type="ring" pct={balancePct} accent="#e85d24" height={90} />
+        <div style={{ width: '96px', height: '96px', margin: '4px 0' }}>
+          <DotChart type="ring" pct={balancePct} accent="var(--accent)" height={96} />
         </div>
-        <span style={{ ...amount, fontSize: '1.1rem' }}>฿{fmt(balance)}</span>
-        <span style={{ fontSize: '0.72rem', color: 'var(--text2)' }}>
+        <span style={{ ...amount, fontSize: '1.3rem' }}>฿{fmt(balance)}</span>
+        <span style={{ fontSize: '0.7rem', color: 'var(--text2)', fontFamily: "'Kalam','Itim',cursive" }}>
           {income > 0 ? (balancePct * 100).toFixed(0) : 0}% ของรายรับ
         </span>
       </div>
@@ -262,27 +265,28 @@ export default function Dashboard() {
       <div style={card}>
         <span style={label}>Budget</span>
         {loading || budgetItems.length === 0 ? (
-          <p style={{ color: 'var(--text2)', fontSize: '0.8rem', margin: 'auto 0' }}>
-            {loading ? 'กำลังโหลด...' : 'ยังไม่ได้ตั้ง budget'}
-          </p>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '6px', color: 'var(--text2)' }}>
+            <span style={{ fontSize: '1.6rem' }}>📋</span>
+            <span style={{ fontSize: '0.78rem', fontWeight: 700 }}>{loading ? 'กำลังโหลด…' : 'ยังไม่ได้ตั้ง budget'}</span>
+          </div>
         ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '4px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '2px' }}>
             {budgetItems.map(b => {
               const pct = Math.min(1, b.spent / b.limit)
               const color = pct >= 1 ? 'var(--red)' : pct >= 0.9 ? 'var(--amber)' : 'var(--green)'
               return (
                 <div key={b.catId}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '0.78rem', color: 'var(--text)' }}>
-                      {(() => { const Icon = CAT_ICONS[b.cat.id] ?? Tag; return <Icon size={13} color={b.cat.color} strokeWidth={1.8} /> })()}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text)', fontFamily: "'Kalam','Itim',cursive" }}>
+                      {(() => { const Icon = CAT_ICONS[b.cat.id] ?? Tag; return <Icon size={13} color={b.cat.color} strokeWidth={2} /> })()}
                       {b.cat.label}
                     </span>
-                    <span style={{ fontSize: '0.72rem', color: 'var(--text2)', fontFamily: 'DM Mono, monospace' }}>
+                    <span style={{ fontSize: '0.75rem', color: pct >= 1 ? 'var(--red)' : 'var(--text2)', fontFamily: "'Caveat', cursive", fontWeight: 700 }}>
                       {fmt(b.spent)}/{fmt(b.limit)}
                     </span>
                   </div>
-                  <div style={{ height: '4px', background: 'var(--bg3)', borderRadius: '99px', overflow: 'hidden' }}>
-                    <div style={{ height: '100%', width: `${pct * 100}%`, background: color, borderRadius: '99px', transition: 'width 0.4s' }} />
+                  <div style={{ height: '6px', background: 'var(--bg3)', borderRadius: '99px', overflow: 'hidden' }}>
+                    <div style={{ height: '100%', width: `${pct * 100}%`, background: color, borderRadius: '99px', transition: 'width 0.5s ease' }} />
                   </div>
                 </div>
               )
@@ -295,7 +299,10 @@ export default function Dashboard() {
       <div style={card}>
         <span style={label}>เป้าออม</span>
         {top2Goals.length === 0 ? (
-          <p style={{ color: 'var(--text2)', fontSize: '0.8rem', margin: 'auto 0' }}>ยังไม่มีเป้าหมาย</p>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '6px', color: 'var(--text2)' }}>
+            <span style={{ fontSize: '1.6rem' }}>🎯</span>
+            <span style={{ fontSize: '0.78rem', fontWeight: 700 }}>ยังไม่มีเป้าหมาย</span>
+          </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {top2Goals.map((g: SavingsGoal) => {
@@ -309,7 +316,7 @@ export default function Dashboard() {
                     </span>
                     <span style={{
                       fontSize: '0.72rem', fontWeight: 700, marginLeft: '6px',
-                      fontFamily: 'DM Mono, monospace',
+                      fontFamily: "'Caveat', cursive",
                       color: done ? 'var(--green)' : 'var(--purple)',
                     }}>
                       {(pct * 100).toFixed(0)}%
@@ -325,7 +332,7 @@ export default function Dashboard() {
                     }} />
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px' }}>
-                    <span style={{ fontSize: '0.68rem', color: 'var(--text2)', fontFamily: 'DM Mono, monospace' }}>
+                    <span style={{ fontSize: '0.68rem', color: 'var(--text2)', fontFamily: "'Caveat', cursive" }}>
                       ฿{fmt(g.saved)} / ฿{fmt(g.target)}
                     </span>
                     <span style={{ fontSize: '0.68rem', color: 'var(--text2)' }}>{calcETA(g)}</span>
@@ -346,9 +353,9 @@ export default function Dashboard() {
               onClick={() => navigate('/slip')}
               style={{
                 background: 'var(--bg3)', color: 'var(--text2)',
-                border: '1px solid var(--border)', borderRadius: '8px',
-                padding: '4px 10px', fontSize: '0.78rem', fontWeight: 500,
-                cursor: 'pointer', fontFamily: 'DM Sans, sans-serif',
+                border: '1px solid var(--border)', borderRadius: '10px',
+                padding: '4px 12px', fontSize: '0.78rem', fontWeight: 700,
+                cursor: 'pointer', fontFamily: "'Kalam', 'Itim', cursive",
                 display: 'flex', alignItems: 'center', gap: '4px',
               }}
             >
@@ -358,9 +365,9 @@ export default function Dashboard() {
               onClick={() => navigate('/add')}
               style={{
                 background: 'var(--accent)', color: '#fff',
-                border: 'none', borderRadius: '8px',
-                padding: '4px 12px', fontSize: '0.78rem', fontWeight: 600,
-                cursor: 'pointer', fontFamily: 'DM Sans, sans-serif',
+                border: '1px solid var(--border)', borderRadius: '10px',
+                padding: '4px 12px', fontSize: '0.78rem', fontWeight: 700,
+                cursor: 'pointer', fontFamily: "'Kalam', 'Itim', cursive",
                 display: 'flex', alignItems: 'center', gap: '4px',
               }}
             >
@@ -370,34 +377,23 @@ export default function Dashboard() {
         </div>
 
         {latest.length === 0 ? (
-          <div style={{ display: 'flex', gap: '8px' }}>
-            <div
-              onClick={() => navigate('/slip')}
-              style={{
-                flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center',
-                justifyContent: 'center', gap: '6px', cursor: 'pointer',
-                border: '2px dashed var(--border)', borderRadius: '8px',
-                color: 'var(--text2)', fontSize: '0.8rem', padding: '20px 8px',
-              }}
-            >
-              <Camera size={22} strokeWidth={1.5} />
-              <span>สแกน slip</span>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '12px', padding: '20px 0' }}>
+            <span style={{ fontSize: '2rem' }}>💸</span>
+            <div style={{ textAlign: 'center' }}>
+              <p style={{ fontWeight: 700, color: 'var(--text)', fontSize: '0.9rem' }}>ยังไม่มีรายการ</p>
+              <p style={{ fontSize: '0.78rem', color: 'var(--text2)', marginTop: '4px' }}>เพิ่มรายการหรือสแกน slip เพื่อเริ่มต้น</p>
             </div>
-            <div
-              onClick={() => navigate('/add')}
-              style={{
-                flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center',
-                justifyContent: 'center', gap: '6px', cursor: 'pointer',
-                border: '2px dashed var(--border)', borderRadius: '8px',
-                color: 'var(--text2)', fontSize: '0.8rem', padding: '20px 8px',
-              }}
-            >
-              <Pencil size={22} strokeWidth={1.5} />
-              <span>เพิ่มรายการ</span>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button onClick={() => navigate('/slip')} style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '8px 14px', borderRadius: '10px', border: '1px solid var(--border)', background: 'var(--bg3)', color: 'var(--text2)', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer', fontFamily: "'Kalam','Itim',cursive" }}>
+                <Camera size={14} strokeWidth={2} /> Slip
+              </button>
+              <button onClick={() => navigate('/add')} style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '8px 14px', borderRadius: '10px', border: 'none', background: 'var(--accent)', color: '#fff', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer', fontFamily: "'Kalam','Itim',cursive" }}>
+                <Plus size={14} strokeWidth={2.5} /> เพิ่มรายการ
+              </button>
             </div>
           </div>
         ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
             {latest.map(tx => {
               const cat = getCat(tx.catId)
               return (
@@ -406,44 +402,34 @@ export default function Dashboard() {
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '10px',
-                    padding: '8px 10px',
-                    borderRadius: '8px',
-                    background: 'var(--bg3)',
+                    gap: '12px',
+                    padding: '10px 12px',
+                    borderRadius: '12px',
+                    transition: 'background 0.12s',
+                    cursor: 'default',
                   }}
+                  onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg3)')}
+                  onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                 >
                   <div style={{
-                    width: 32, height: 32, borderRadius: 8, flexShrink: 0,
-                    background: cat.color + '20',
+                    width: 36, height: 36, borderRadius: '10px', flexShrink: 0,
+                    background: cat.color + '1a',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                   }}>
-                    {(() => { const Icon = CAT_ICONS[cat.id] ?? Tag; return <Icon size={15} color={cat.color} strokeWidth={1.8} /> })()}
+                    {(() => { const Icon = CAT_ICONS[cat.id] ?? Tag; return <Icon size={16} color={cat.color} strokeWidth={2} /> })()}
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text)', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <p style={{ fontFamily: "'Kalam','Itim',cursive", fontWeight: 700, fontSize: '0.88rem', color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {tx.name}
                     </p>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px', marginTop: '2px' }}>
-                      <span style={{
-                        display: 'inline-flex', alignItems: 'center',
-                        background: cat.color + '18', color: cat.color,
-                        padding: '0px 6px', borderRadius: '20px',
-                        fontSize: '0.63rem', fontWeight: 600,
-                      }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px' }}>
+                      <span style={{ background: cat.color + '18', color: cat.color, padding: '1px 6px', borderRadius: '20px', fontSize: '0.63rem', fontWeight: 700, fontFamily: "'Kalam','Itim',cursive" }}>
                         {cat.label}
                       </span>
-                      <span style={{ fontSize: '0.68rem', color: 'var(--text2)' }}>{tx.date}</span>
+                      <span style={{ fontSize: '0.65rem', color: 'var(--text2)' }}>{tx.date}</span>
                     </div>
                   </div>
-                  <span
-                    style={{
-                      fontFamily: 'DM Mono, monospace',
-                      fontSize: '0.88rem',
-                      fontWeight: 600,
-                      color: tx.amount > 0 ? 'var(--green)' : 'var(--text)',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
+                  <span style={{ fontFamily: "'Caveat',cursive", fontSize: '1.05rem', fontWeight: 700, color: tx.amount > 0 ? 'var(--green)' : 'var(--red)', whiteSpace: 'nowrap' }}>
                     {tx.amount > 0 ? '+' : ''}฿{fmt(Math.abs(tx.amount))}
                   </span>
                 </div>

@@ -32,6 +32,7 @@ export default function Categories() {
     borderRadius: 16,
     padding: '20px',
     border: '1px solid var(--border)',
+    boxShadow: 'var(--shadow)',
     marginBottom: 16,
   }
 
@@ -54,22 +55,32 @@ export default function Categories() {
   }
 
   return (
-    <div style={{ padding: '16px', maxWidth: 480, margin: '0 auto' }}>
-      <h2 style={{ fontWeight: 700, fontSize: '1.1rem', color: 'var(--text)', marginBottom: 4 }}>
-        จัดการ Category
-      </h2>
-      <p style={{ fontSize: '0.82rem', color: 'var(--text2)', marginBottom: 20 }}>
+    <div style={{ padding: '16px', maxWidth: 600, margin: '0 auto' }}>
+      <h1 style={{
+        fontFamily: "'Caveat', cursive",
+        fontSize: '1.8rem',
+        fontWeight: 700,
+        color: 'var(--text)',
+        marginBottom: '2px',
+      }}>
+        Categories 🏷️
+      </h1>
+      <p style={{ fontSize: '0.85rem', color: 'var(--text2)', marginBottom: 20, fontFamily: "'Kalam', 'Itim', cursive" }}>
         เพิ่ม category ของตัวเองได้ไม่จำกัด
       </p>
 
       {/* Add form */}
       <div style={card}>
-        <p style={{ fontWeight: 600, fontSize: '0.88rem', color: 'var(--text)', marginBottom: 14 }}>
+        <p style={{
+          fontFamily: "'Caveat', cursive",
+          fontWeight: 700, fontSize: '1.1rem',
+          color: 'var(--text)', marginBottom: 14,
+        }}>
           เพิ่ม Category ใหม่
         </p>
 
         {/* Name */}
-        <label style={{ fontSize: '0.78rem', color: 'var(--text2)', display: 'block', marginBottom: 6 }}>
+        <label style={{ fontSize: '0.78rem', color: 'var(--text2)', display: 'block', marginBottom: 6, fontFamily: "'Kalam', 'Itim', cursive" }}>
           ชื่อ
         </label>
         <input
@@ -81,14 +92,14 @@ export default function Categories() {
             width: '100%', boxSizing: 'border-box',
             background: 'var(--bg3)', border: '1px solid var(--border)',
             borderRadius: 10, padding: '10px 12px',
-            fontSize: '0.9rem', color: 'var(--text)',
-            fontFamily: 'DM Sans, sans-serif', outline: 'none',
+            fontSize: '0.95rem', color: 'var(--text)',
+            fontFamily: "'Kalam', 'Itim', cursive", outline: 'none',
             marginBottom: 14,
           }}
         />
 
         {/* Emoji picker */}
-        <label style={{ fontSize: '0.78rem', color: 'var(--text2)', display: 'block', marginBottom: 8 }}>
+        <label style={{ fontSize: '0.78rem', color: 'var(--text2)', display: 'block', marginBottom: 8, fontFamily: "'Kalam', 'Itim', cursive" }}>
           ไอคอน (emoji)
         </label>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 16 }}>
@@ -99,11 +110,12 @@ export default function Categories() {
               style={{
                 width: 36, height: 36,
                 borderRadius: 8,
-                border: emoji === e ? `2px solid ${color}` : '2px solid transparent',
+                border: emoji === e ? `2px solid ${color}` : '1px solid var(--border)',
                 background: emoji === e ? `${color}20` : 'var(--bg3)',
                 fontSize: '1.1rem',
                 cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
+                boxShadow: emoji === e ? 'var(--shadow-sm)' : 'none',
               }}
             >
               {e}
@@ -112,7 +124,7 @@ export default function Categories() {
         </div>
 
         {/* Color picker */}
-        <label style={{ fontSize: '0.78rem', color: 'var(--text2)', display: 'block', marginBottom: 8 }}>
+        <label style={{ fontSize: '0.78rem', color: 'var(--text2)', display: 'block', marginBottom: 8, fontFamily: "'Kalam', 'Itim', cursive" }}>
           สี
         </label>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 18 }}>
@@ -137,23 +149,26 @@ export default function Categories() {
         <div style={{
           display: 'flex', alignItems: 'center', gap: 10,
           padding: '10px 14px', borderRadius: 10,
-          background: `${color}18`, marginBottom: 14,
+          background: `${color}18`,
+          border: `2px solid ${color}40`,
+          marginBottom: 14,
         }}>
           <span style={{ fontSize: '1.3rem' }}>{emoji}</span>
-          <span style={{ fontWeight: 600, color, fontSize: '0.95rem' }}>
+          <span style={{ fontWeight: 700, color, fontSize: '0.95rem', fontFamily: "'Kalam', 'Itim', cursive" }}>
             {label || 'ชื่อ category'}
           </span>
           <span style={{
             marginLeft: 'auto', fontSize: '0.72rem',
             background: `${color}30`, color,
             padding: '2px 8px', borderRadius: 20,
+            fontFamily: "'Kalam', 'Itim', cursive",
           }}>
             ตัวอย่าง
           </span>
         </div>
 
         {error && (
-          <p style={{ fontSize: '0.8rem', color: 'var(--red)', marginBottom: 10 }}>{error}</p>
+          <p style={{ fontSize: '0.8rem', color: 'var(--red)', marginBottom: 10, fontFamily: "'Kalam', 'Itim', cursive" }}>{error}</p>
         )}
 
         <button
@@ -162,14 +177,15 @@ export default function Categories() {
           style={{
             width: '100%',
             padding: '11px',
-            borderRadius: 12,
-            border: 'none',
+            borderRadius: '10px',
+            border: label.trim() ? '2px solid var(--accent)' : '1px solid var(--border)',
             background: label.trim() ? 'var(--accent)' : 'var(--bg3)',
             color: label.trim() ? '#fff' : 'var(--text2)',
-            fontWeight: 600,
-            fontSize: '0.9rem',
+            fontWeight: 700,
+            fontSize: '0.95rem',
             cursor: label.trim() ? 'pointer' : 'default',
-            fontFamily: 'DM Sans, sans-serif',
+            fontFamily: "'Kalam', 'Itim', cursive",
+            boxShadow: label.trim() ? 'var(--shadow)' : 'none',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
           }}
         >
@@ -181,7 +197,11 @@ export default function Categories() {
       {/* Custom categories */}
       {customCats.length > 0 && (
         <div style={card}>
-          <p style={{ fontWeight: 600, fontSize: '0.88rem', color: 'var(--text)', marginBottom: 12 }}>
+          <p style={{
+            fontFamily: "'Caveat', cursive",
+            fontWeight: 700, fontSize: '1.1rem',
+            color: 'var(--text)', marginBottom: 12,
+          }}>
             Categories ของคุณ ({customCats.length})
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -193,10 +213,15 @@ export default function Categories() {
                   padding: '10px 12px', borderRadius: 10,
                   background: 'var(--bg3)',
                   border: '1px solid var(--border)',
+                  boxShadow: 'var(--shadow-sm)',
                 }}>
                   <span style={{ fontSize: '1.2rem', width: 24, textAlign: 'center' }}>{cat.emoji}</span>
                   <Icon size={14} color={cat.color} />
-                  <span style={{ fontWeight: 500, fontSize: '0.88rem', color: 'var(--text)', flex: 1 }}>
+                  <span style={{
+                    fontWeight: 700, fontSize: '0.9rem',
+                    color: 'var(--text)', flex: 1,
+                    fontFamily: "'Kalam', 'Itim', cursive",
+                  }}>
                     {cat.label}
                   </span>
                   <span style={{
@@ -224,14 +249,16 @@ export default function Categories() {
       {/* Built-in (read-only) */}
       <div style={card}>
         <p style={{
-          fontWeight: 600, fontSize: '0.88rem', color: 'var(--text)',
+          fontFamily: "'Caveat', cursive",
+          fontWeight: 700, fontSize: '1.1rem',
+          color: 'var(--text)',
           marginBottom: 4, display: 'flex', alignItems: 'center', gap: 6,
         }}>
           <Lock size={13} color="var(--text2)" />
-          Categories เริ่มต้น (แก้ไขไม่ได้)
+          Categories เริ่มต้น
         </p>
-        <p style={{ fontSize: '0.75rem', color: 'var(--text2)', marginBottom: 12 }}>
-          categories เหล่านี้เป็นค่าเริ่มต้นของระบบ
+        <p style={{ fontSize: '0.75rem', color: 'var(--text2)', marginBottom: 12, fontFamily: "'Kalam', 'Itim', cursive" }}>
+          categories เหล่านี้เป็นค่าเริ่มต้นของระบบ แก้ไขไม่ได้
         </p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {builtInCats.map(cat => (
@@ -239,10 +266,10 @@ export default function Categories() {
               display: 'flex', alignItems: 'center', gap: 6,
               padding: '6px 10px', borderRadius: 20,
               background: `${cat.color}18`,
-              border: `1px solid ${cat.color}40`,
+              border: `2px solid ${cat.color}40`,
             }}>
               <span style={{ fontSize: '0.85rem' }}>{cat.emoji}</span>
-              <span style={{ fontSize: '0.8rem', color: cat.color, fontWeight: 500 }}>{cat.label}</span>
+              <span style={{ fontSize: '0.8rem', color: cat.color, fontWeight: 700, fontFamily: "'Kalam', 'Itim', cursive" }}>{cat.label}</span>
             </div>
           ))}
         </div>
