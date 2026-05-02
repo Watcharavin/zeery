@@ -65,14 +65,13 @@ export default function Sidebar({ drawer = false }: { drawer?: boolean }) {
     >
       <div style={{ marginBottom: '0.5rem' }}>
         <p style={{
-          fontSize: '0.68rem',
+          fontSize: '0.8rem',
           color: 'var(--text2)',
           textTransform: 'uppercase',
           letterSpacing: '0.1em',
           padding: '0 12px 6px',
           fontFamily: "'Caveat', cursive",
           fontWeight: 700,
-          fontSize: '0.8rem',
         }}>
           หลัก
         </p>
