@@ -8,12 +8,12 @@
 
 | Layer | Technology |
 |-------|-----------|
-| Framework | React 18 + Vite + TypeScript |
+| Framework | React 19 + Vite + TypeScript |
 | Database | Firebase Firestore (real-time sync) |
 | Auth | Firebase Anonymous Auth (auto, ไม่ต้อง login) |
-| Charts | Recharts + Custom Canvas |
+| Charts | Recharts (line) + roughjs (hand-drawn canvas) |
 | Icons | Lucide React |
-| Styling | CSS custom properties (dark/light/auto) |
+| Styling | CSS custom properties + Tailwind CSS |
 
 ---
 
@@ -69,25 +69,32 @@ Firebase config: `src/lib/firebase.ts` — project `zeery-4c4c7`
 src/
   components/
     dashboard/      DotChart
-    layout/         BottomNav, TopBar
+    layout/         AppShell, TopBar, Sidebar, BottomNav
+    ui/             RoughButton, RoughProgress, ConfirmButton, Toast
+    slip/           SlipUpload, SlipConfirm
   contexts/
-    AuthContext.tsx  — Anonymous auth provider
+    AuthContext.tsx       — Anonymous auth provider
+    CategoriesContext.tsx — Custom categories
   hooks/
     useAuth.ts
     useTransactions.ts   — real-time, 60 days window
     useBudget.ts
     useGoals.ts
     useNetWorth.ts
+    useRecurring.ts
   lib/
     firebase.ts      — Firebase init
     firestore.ts     — CRUD + subscribe functions
+    dotchart.ts      — roughjs hand-drawn canvas charts
     catIcons.ts      — Category icon map (Lucide)
   pages/
     Dashboard, Transactions, AddTransaction
     SlipOCR, Budget, Report
     Recurring, Savings, NetWorth, Export, AIChat
+    Categories
   types/
     index.ts         — Transaction, Budget, SavingsGoal, Asset, Liability, Recurring, CATEGORIES
+  index.css          — Design tokens (--bg, --accent, --shadow, --border, etc.)
 ```
 
 ---
@@ -122,14 +129,23 @@ src/
 
 - [x] Transactions page: filter by month (subscribeTransactions per month, unlimited history)
 - [x] Dashboard: net balance hero card (large ± balance) + savings goal progress bar with %
-
-- [x] PDF Export: branded header (#e85d24), category colored bars, professional footer, print A4 CSS
-
+- [x] PDF Export: branded header, category colored bars, professional footer, print A4 CSS
 - [x] Rename Flow → Zeery (branding)
-- [x] Dashboard net balance hero card + savings goal progress bars
-- [x] PDF Export branded (header, category hex colors, A4 print fix)
-- [x] AI Chat (Zeery AI) — streaming, multi-turn, financial context
+- [x] AI Chat (Zeery AI) — streaming, multi-turn, financial context injected as system prompt
+- [x] Custom categories — add/edit/delete with color + icon picker
+- [x] Recurring transactions — auto-create ทุกต้นเดือน, trigger manual ได้
+
+### Visual Polish (Phase 5)
+- [x] **roughjs hand-drawn charts** — DotChart ใช้ rough.canvas() แทน smooth canvas
+- [x] **Mobile navigation** — hamburger + drawer overlay, BottomNav tabs
+- [x] **Border normalization** — 1px ทุกที่ (เลิกใช้ 2px/3px ยกเว้น active tab indicator)
+- [x] **Design tokens** — parchment bg, layered shadows, 16px radius, Caveat/Kalam fonts
+- [x] **Dashboard hero card** — left accent border + gradient bg, balance ขนาดใหญ่
+- [x] **Empty states** — emoji + description + action button ทุกหน้า
+- [x] **AIChat height fix** — responsive height (mobile -64px BottomNav, desktop no deduction)
+- [x] **Responsive grid** — 2-col breakpoint ที่ 1023px ด้วย CSS attribute selector
 
 ### Planned
 - [ ] Onboarding flow ครั้งแรก
 - [ ] Monthly insight: เปรียบเทียบกับเดือนที่แล้ว
+- [ ] Dark mode support
